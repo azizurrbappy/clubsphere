@@ -1,39 +1,50 @@
 import React from 'react';
 import Container from '../../components/Container/Container';
 import { Link } from 'react-router';
+import { Globe, Search } from 'lucide-react';
 
 const Navbar = () => {
   return (
     <div className="sticky top-0 backdrop-blur-2xl shadow-sm">
       <Container className="navbar">
-        <div className="navbar-start">
+        <div className="navbar-start space-x-10">
           <Link className="text-[#ff4a79] text-lg font-bold">ClubSphere</Link>
 
           <div>
-            <label className="input">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input type="search" required placeholder="Search" />
-            </label>
+            <form className="input outline-0 rounded-full pl-4 pr-0  h-fit hidden sm:flex">
+              <input type="search" required placeholder="Search events..." />
+
+              <span className="text-gray-300 max-md:hidden">|</span>
+
+              <input
+                type="search"
+                placeholder="Neighborhood, city or zip"
+                className="pl-2 max-md:hidden"
+              />
+
+              <button className="btn h-fit p-3 rounded-full bg-[#2a2a2d]">
+                <Search size={16} className="text-white" />
+              </button>
+            </form>
           </div>
         </div>
-        <div className="navbar-center hidden lg:flex"></div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
+
+        {/* <div className="navbar-center hidden lg:flex"></div> */}
+
+        <div className="navbar-end space-x-5">
+          <ul className="text-sm font-medium flex items-center gap-3">
+            <li>
+              <Link className="flex items-center gap-1">
+                <Globe size={14} /> English
+              </Link>
+            </li>
+            <li className="flex items-center gap-1">
+              <Link>Login</Link>
+            </li>
+          </ul>
+          <button className="btn h-fit px-4 py-2 rounded-full bg-[#2a2a2d] text-white font-medium">
+            Signup
+          </button>
         </div>
       </Container>
     </div>
