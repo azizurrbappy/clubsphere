@@ -4,6 +4,7 @@ import Hero from './Hero';
 import OnlineEvents from './OnlineEvents';
 import JoinClubSphere from './JoinClubSphere';
 import PopularCities from './PopularCities';
+import HowClubSphereWork from './HowClubSphereWork';
 
 const Home = () => {
   return (
@@ -19,6 +20,9 @@ const Home = () => {
 
         {/* Top Category */}
         <PopularCities></PopularCities>
+
+        {/* How ClubSphere Works */}
+        <HowClubSphereWork></HowClubSphereWork>
       </section>
     </>
   );

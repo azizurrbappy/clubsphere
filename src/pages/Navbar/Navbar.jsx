@@ -5,7 +5,7 @@ import { Globe, Search } from 'lucide-react';
 
 const Navbar = () => {
   return (
-    <div className="sticky top-0 backdrop-blur-2xl shadow-sm">
+    <div className="sticky top-0 backdrop-blur-2xl shadow-sm z-50">
       <Container className="navbar">
         <div className="navbar-start space-x-10">
           <Link className="text-[#ff4a79] text-lg font-bold">ClubSphere</Link>
