@@ -12,7 +12,7 @@ const HowClubSphereWork = () => {
           </h3>
         </div>
 
-        <section className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <section className="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div className="flex items-start gap-5 border border-gray-200 rounded-3xl p-5">
             <div>
               <img

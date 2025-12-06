@@ -5,6 +5,7 @@ import OnlineEvents from './OnlineEvents';
 import JoinClubSphere from './JoinClubSphere';
 import PopularCities from './PopularCities';
 import HowClubSphereWork from './HowClubSphereWork';
+import Blog from './Blog';
 
 const Home = () => {
   return (
@@ -23,6 +24,9 @@ const Home = () => {
 
         {/* How ClubSphere Works */}
         <HowClubSphereWork></HowClubSphereWork>
+
+        {/* ClubSphere Blog */}
+        <Blog></Blog>
       </section>
     </>
   );
