@@ -33,10 +33,16 @@ const Navbar = () => {
 
         <div className="navbar-end space-x-5">
           <ul className="text-sm font-medium flex items-center gap-3">
-            <li>
+            <li className="max-sm:hidden">
               <Link className="flex items-center gap-1">
                 <Globe size={14} /> English
               </Link>
+            </li>
+            <li className="flex items-center gap-1">
+              <Link>Clubs</Link>
+            </li>
+            <li className="flex items-center gap-1">
+              <Link>Events</Link>
             </li>
             <li className="flex items-center gap-1">
               <Link>Login</Link>

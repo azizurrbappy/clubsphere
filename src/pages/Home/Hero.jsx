@@ -41,8 +41,8 @@ const Hero = () => {
 
       <p className="max-w-lg text-center text-[#464649]">
         Whatever your interest, from hiking and reading to networking and skill
-        sharing, there are thousands of people who share it on Meetup. Events
-        are happening every day—sign up to join the fun.
+        sharing, there are thousands of people who share it on ClubSphere.
+        Events are happening every day—sign up to join the fun.
       </p>
 
       <button className="btn h-fit px-5 py-3 rounded-full text-base bg-[#232326] text-white ">
