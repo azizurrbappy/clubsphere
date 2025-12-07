@@ -8,7 +8,7 @@ const Navbar = () => {
     <div className="sticky top-0 backdrop-blur-2xl shadow-sm z-50">
       <Container className="navbar">
         <div className="navbar-start space-x-10">
-          <Link className="text-[#ff4a79] text-lg font-bold">ClubSphere</Link>
+          <Link className="text-[#3659e3] text-lg font-bold">ClubSphere</Link>
 
           <div>
             <form className="input outline-0 rounded-full pl-4 pr-0  h-fit hidden sm:flex">
@@ -22,7 +22,7 @@ const Navbar = () => {
                 className="pl-2 max-md:hidden"
               />
 
-              <button className="btn h-fit p-3 rounded-full bg-[#2a2a2d]">
+              <button className="btn h-fit p-3 rounded-full bg-[#3659e3]">
                 <Search size={16} className="text-white" />
               </button>
             </form>
@@ -48,7 +48,7 @@ const Navbar = () => {
               <Link>Login</Link>
             </li>
           </ul>
-          <button className="btn h-fit px-4 py-2 rounded-full bg-[#2a2a2d] text-white font-medium">
+          <button className="btn h-fit px-4 py-2 rounded-full bg-[#3659e3] text-white font-medium">
             Signup
           </button>
         </div>

@@ -44,7 +44,7 @@ const JoinClubSphere = () => {
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}
           >
-            <Link className="btn h-fit px-5 py-3 rounded-full text-base bg-[#232326] text-white">
+            <Link className="btn h-fit px-5 py-3 rounded-full text-base bg-[#3659e3] text-white">
               Join ClubSphere
             </Link>
           </motion.div>

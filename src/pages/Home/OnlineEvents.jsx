@@ -42,7 +42,7 @@ const OnlineEvents = () => {
         </h3>
         <Link
           to=""
-          className="text-[#7661D2] font-semibold hover:underline max-sm:hidden"
+          className="text-[#3659e3] font-semibold hover:underline max-sm:hidden"
         >
           See all events
         </Link>

@@ -21,7 +21,7 @@ const BlogCard = () => {
         </p>
         <Link
           to=""
-          className="text-[#7661D2] font-medium hover:underline max-sm:hidden text-sm"
+          className="text-[#3659e3] font-medium hover:underline max-sm:hidden text-sm"
         >
           Read More
         </Link>

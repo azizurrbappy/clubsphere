@@ -5,10 +5,10 @@ import { ArrowRight, Facebook, Github, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#2a2a2d] text-[#ffffff7f] py-10">
+    <footer className="bg-[#1e0a3d] text-[#ffffff7f] py-10">
       <Container className="flex justify-between flex-wrap">
         <div className="flex items-center gap-3">
-          <Link className="text-[#ff4a79] text-2xl font-bold">ClubSphere.</Link>
+          <Link className="text-[#f05537] text-2xl font-bold">ClubSphere.</Link>
           <p className="text-white text-2xl font-bold">
             The <span className="text-[ff4a79]">people</span> platform
           </p>
@@ -37,7 +37,7 @@ const Footer = () => {
         </nav>
         <nav className="space-y-2">
           <h6 className="text-white mb-3">Discover</h6>
-          <Link className="link link-hover">Groups</Link>
+          <Link className="link link-hover">Clubs</Link>
           <Link className="link link-hover">Events</Link>
         </nav>
         <nav className="space-y-2">
