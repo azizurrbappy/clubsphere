@@ -1,10 +1,47 @@
-import React from 'react';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+const lineVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
 
 const Hero = () => {
   return (
-    <section className="flex items-center justify-center flex-col min-h-[calc(100vh-40vh)] gap-9">
-      <h1 className="md:text-4xl text-3xl font-bold text-center space-y-2.5 text-[#232326]">
-        <div className="block">
+    <motion.section
+      className="flex items-center justify-center flex-col min-h-[calc(100vh-30vh)] gap-9"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.h1
+        className="md:text-4xl text-3xl font-bold text-center space-y-2.5 text-[#232326]"
+        variants={containerVariants}
+      >
+        <motion.div className="block" variants={lineVariants}>
           The
           <span className="inline-block -mb-2 mx-1">
             <img
@@ -14,8 +51,8 @@ const Hero = () => {
             />
           </span>
           people platform.
-        </div>
-        <div className="block">
+        </motion.div>
+        <motion.div className="block" variants={lineVariants}>
           Where
           <span className="inline-block -mb-2 mx-1">
             <img
@@ -25,8 +62,8 @@ const Hero = () => {
             />
           </span>
           interests
-        </div>
-        <div className="block">
+        </motion.div>
+        <motion.div className="block" variants={lineVariants}>
           become
           <span className="inline-block -mb-2 mx-1">
             <img
@@ -36,19 +73,28 @@ const Hero = () => {
             />
           </span>
           friendships.
-        </div>
-      </h1>
+        </motion.div>
+      </motion.h1>
 
-      <p className="max-w-lg text-center text-[#464649]">
+      <motion.p
+        className="max-w-lg text-center text-[#464649]"
+        variants={itemVariants}
+      >
         Whatever your interest, from hiking and reading to networking and skill
         sharing, there are thousands of people who share it on ClubSphere.
         Events are happening every day—sign up to join the fun.
-      </p>
+      </motion.p>
 
-      <button className="btn h-fit px-5 py-3 rounded-full text-base bg-[#232326] text-white ">
+      <motion.button
+        className="btn h-fit px-5 py-3 rounded-full text-base bg-[#232326] text-white"
+        variants={itemVariants}
+        whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(0,0,0,0.15)' }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ duration: 0.2 }}
+      >
         Join ClubSphere
-      </button>
-    </section>
+      </motion.button>
+    </motion.section>
   );
 };
 

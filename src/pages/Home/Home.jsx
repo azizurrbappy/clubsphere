@@ -1,5 +1,4 @@
-import React from 'react';
-import Container from '../../components/Container/Container';
+import { motion } from 'framer-motion';
 import Hero from './Hero';
 import OnlineEvents from './OnlineEvents';
 import JoinClubSphere from './JoinClubSphere';
@@ -7,28 +6,65 @@ import PopularCities from './PopularCities';
 import HowClubSphereWork from './HowClubSphereWork';
 import Blog from './Blog';
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+};
+
 const Home = () => {
   return (
-    <>
-      <section className="max-w-7xl mx-auto lg:px-0 px-4">
-        <Hero></Hero>
+    <section className="max-w-7xl mx-auto lg:px-0 px-4">
+      <Hero />
 
-        {/* Upcoming Events */}
-        <OnlineEvents></OnlineEvents>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10px', amount: 0.3 }}
+        variants={sectionVariants}
+      >
+        <OnlineEvents />
+      </motion.div>
 
-        {/* Join Sphere */}
-        <JoinClubSphere></JoinClubSphere>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px', amount: 0.3 }}
+        variants={sectionVariants}
+      >
+        <JoinClubSphere />
+      </motion.div>
 
-        {/* Top Category */}
-        <PopularCities></PopularCities>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px', amount: 0.3 }}
+        variants={sectionVariants}
+      >
+        <PopularCities />
+      </motion.div>
 
-        {/* How ClubSphere Works */}
-        <HowClubSphereWork></HowClubSphereWork>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px', amount: 0.3 }}
+        variants={sectionVariants}
+      >
+        <HowClubSphereWork />
+      </motion.div>
 
-        {/* ClubSphere Blog */}
-        <Blog></Blog>
-      </section>
-    </>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px', amount: 0.3 }}
+        variants={sectionVariants}
+      >
+        <Blog />
+      </motion.div>
+    </section>
   );
 };
 
