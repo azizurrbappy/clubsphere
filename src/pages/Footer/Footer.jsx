@@ -1,12 +1,12 @@
 import React from 'react';
 import Container from '../../components/Container/Container';
 import { Link } from 'react-router';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Facebook, Github, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
     <footer className="bg-[#2a2a2d] text-[#ffffff7f] py-10">
-      <Container className="mb-10 flex justify-between flex-wrap">
+      <Container className="flex justify-between flex-wrap">
         <div className="flex items-center gap-3">
           <Link className="text-[#ff4a79] text-2xl font-bold">ClubSphere.</Link>
           <p className="text-white text-2xl font-bold">
@@ -16,66 +16,56 @@ const Footer = () => {
 
         <div>
           <p className="text-2xl font-bold text-white flex items-center gap-2">
-            Create your own Meetup group.{' '}
-            <Link className="text-[#ffffff7f] flex items-center gap-2">
+            <span className="max-sm:hidden">Create your own Meetup group.</span>
+            <Link className="text-[#ffffff7f] flex items-center gap-2 max-sm:mt-3">
               Get Started <ArrowRight />
             </Link>
           </p>
         </div>
       </Container>
-      <Container className="footer sm:footer-horizontal">
-        <nav>
-          <h6 className="footer-title">Services</h6>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
+
+      <Container className="py-10">
+        <hr className="text-[#464649]" />
+      </Container>
+
+      <Container className="footer sm:footer-horizontal mb-20">
+        <nav className="space-y-2">
+          <h6 className="text-white mb-3">Your Account</h6>
+          <Link className="link link-hover">Sign up</Link>
+          <Link className="link link-hover">Login</Link>
+          <Link className="link link-hover">Help</Link>
         </nav>
-        <nav>
-          <h6 className="footer-title">Company</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+        <nav className="space-y-2">
+          <h6 className="text-white mb-3">Discover</h6>
+          <Link className="link link-hover">Groups</Link>
+          <Link className="link link-hover">Events</Link>
         </nav>
-        <nav>
-          <h6 className="footer-title">Social</h6>
-          <div className="grid grid-flow-col gap-4">
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
-              >
-                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-              </svg>
-            </a>
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
-              >
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-              </svg>
-            </a>
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
-              >
-                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-              </svg>
-            </a>
+        <nav className="space-y-2">
+          <h6 className="text-white mb-3">ClubSphere</h6>
+          <Link className="link link-hover">About</Link>
+          <Link className="link link-hover">Blog</Link>
+        </nav>
+        <nav className="bg-[#ffffff0c] px-5 py-6 rounded-4xl w-[320px]">
+          <h6 className="text-white mb-3">Follow us</h6>
+          <div className="flex items-center justify-between w-full">
+            <Link to="https://www.facebook.com/mebappy10">
+              <Facebook className="hover:text-[#1877F2]" />
+            </Link>
+            <Link to="https://github.com/azizurrbappy">
+              <Github className="hover:text-[#ffffff]" />
+            </Link>
+            <Link to="https://www.linkedin.com/in/azizurrbappy">
+              <Linkedin className="hover:text-[#1877F2]" />
+            </Link>
           </div>
         </nav>
+      </Container>
+
+      <Container>
+        <hr className="text-[#464649] mb-10" />
+        <p className="text-center text-sm">
+          © 2025 ClubSphere. All rights reserved.
+        </p>
       </Container>
     </footer>
   );

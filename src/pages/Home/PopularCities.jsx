@@ -73,8 +73,8 @@ const PopularCities = () => {
         </motion.div>
         <motion.div variants={cardVariants}>
           <CityCard
-            title="Nashville"
-            img="https://www.visitmusiccity.com/sites/default/files/styles/image_gallery_image/public/2025-02/nashville-skyline-hero-2.jpg?itok=2vsUqnMd"
+            title="Miami"
+            img="https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt67e44a131f25b895/679f2c7f1a0e5748e2dbfa56/iStock-2136051137-2-Header_Mobile.jpg?fit=crop&disable=upscale&auto=webp&quality=60&crop=smart"
           />
         </motion.div>
       </motion.div>
