@@ -33,8 +33,12 @@ const OnlineEvents = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <h3 className="text-[#232326] text-3xl font-bold max-sm:text-2xl">
+        <h3 className="text-[#232326] text-3xl font-bold max-sm:text-2xl flex items-center gap-4">
           Upcoming online events
+          <img
+            className="-mt-6"
+            src="https://secure.meetupstatic.com/next/images/scribbles/camera-with-three-exclamative-lines.svg"
+          />
         </h3>
         <Link
           to=""
