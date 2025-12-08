@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { use } from 'react';
 import Container from '../../components/Container/Container';
 import { Link } from 'react-router';
 import { Globe, Search } from 'lucide-react';
+import { AuthModal } from '../../Context/AuthModal';
 
 const Navbar = () => {
+  const { onboardingModal } = use(AuthModal);
+
   return (
     <div className="sticky top-0 backdrop-blur-2xl shadow-sm z-50">
       <Container className="navbar">
@@ -31,24 +34,31 @@ const Navbar = () => {
 
         {/* <div className="navbar-center hidden lg:flex"></div> */}
 
-        <div className="navbar-end space-x-5">
-          <ul className="text-sm font-medium flex items-center gap-3">
-            <li className="max-sm:hidden">
-              <Link className="flex items-center gap-1">
-                <Globe size={14} /> English
-              </Link>
-            </li>
-            <li className="flex items-center gap-1">
-              <Link to="/find/source=Clubs">Clubs</Link>
-            </li>
-            <li className="flex items-center gap-1">
+        <div className="navbar-end space-x-1">
+          <ul className="text-sm font-medium flex items-center nav-links">
+            <Link className="flex items-center gap-1 max-sm:hidden mr-3">
+              <Globe size={14} /> English
+            </Link>
+
+            <li>
               <Link to="/find/source=Events">Events</Link>
             </li>
-            <li className="flex items-center gap-1">
-              <Link>Login</Link>
+            <li>
+              <Link to="/find/source=Clubs">Clubs</Link>
+            </li>
+            <li>
+              <button
+                className="cursor-pointer"
+                onClick={() => onboardingModal('login')}
+              >
+                Login
+              </button>
             </li>
           </ul>
-          <button className="btn h-fit px-4 py-2 rounded-full bg-[#3659e3] text-white font-medium">
+          <button
+            onClick={() => onboardingModal()}
+            className="btn h-fit px-4 py-2 rounded-full bg-[#3659e3] text-white font-medium"
+          >
             Signup
           </button>
         </div>

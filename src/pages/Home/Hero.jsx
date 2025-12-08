@@ -32,7 +32,7 @@ const lineVariants = {
 const Hero = () => {
   return (
     <motion.section
-      className="flex items-center justify-center flex-col min-h-[calc(100vh-30vh)] gap-9 relative"
+      className="flex items-center justify-center flex-col min-h-[calc(100vh-30vh)] gap-9"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -77,7 +77,7 @@ const Hero = () => {
       </motion.h1>
 
       <motion.p
-        className="max-w-lg text-center text-[#464649]"
+        className="max-w-xl text-center text-[#464649]"
         variants={itemVariants}
       >
         Whatever your interest, from hiking and reading to networking and skill
@@ -94,21 +94,6 @@ const Hero = () => {
       >
         Join ClubSphere
       </motion.button>
-
-      <img
-        className="w-70 max-lg:hidden absolute top-20 left-0"
-        src="https://secure.meetupstatic.com/next/images/home/hero-left.webp"
-      />
-
-      <img
-        className="w-70 max-lg:hidden absolute top-20 right-0"
-        src="https://secure.meetupstatic.com/next/images/home/hero-right.webp"
-      />
-
-      <img
-        className="lg:hidden w-100"
-        src="https://secure.meetupstatic.com/next/images/illustrations/specific/landingpage-hero-mobile.webp?w=1200"
-      />
     </motion.section>
   );
 };

@@ -57,6 +57,7 @@ const Find = () => {
       </div>
       <div className="divider my-5 text-[#d0d0d4]"></div>
 
+      {/* Event and group card */}
       <section></section>
     </Container>
   );
