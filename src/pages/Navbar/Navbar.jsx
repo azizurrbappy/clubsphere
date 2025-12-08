@@ -39,10 +39,10 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="flex items-center gap-1">
-              <Link>Clubs</Link>
+              <Link to="/find/source=Clubs">Clubs</Link>
             </li>
             <li className="flex items-center gap-1">
-              <Link>Events</Link>
+              <Link to="/find/source=Events">Events</Link>
             </li>
             <li className="flex items-center gap-1">
               <Link>Login</Link>

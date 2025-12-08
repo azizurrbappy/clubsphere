@@ -50,8 +50,6 @@ const JoinClubSphere = () => {
           </motion.div>
         </motion.div>
       </div>
-
-      <img src="" alt="" />
     </motion.section>
   );
 };
