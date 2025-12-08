@@ -20,7 +20,7 @@ const BlogCard = () => {
           connections by joining a Girls Night Out Meetup group.
         </p>
         <Link
-          to=""
+          to="/"
           className="text-[#3659e3] font-medium hover:underline max-sm:hidden text-sm"
         >
           Read More

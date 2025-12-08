@@ -4,17 +4,21 @@ import { useForm } from 'react-hook-form';
 
 const Login = ({ setLoginModal }) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+
+  const handleLogin = data => {
+    console.log(data);
+  };
   return (
     <>
-      <form className="space-y-2">
+      <form onSubmit={handleSubmit(handleLogin)} className="space-y-2">
         <fieldset className="fieldset">
           <legend className="fieldset-legend font-semibold text-base">
             Email
           </legend>
           <input
             type="email"
-            {...register('email')}
+            {...register('email', { required: true })}
             className="input input-lg rounded-xl w-full outline-0 text-sm"
           />
         </fieldset>
@@ -25,7 +29,7 @@ const Login = ({ setLoginModal }) => {
           </legend>
           <input
             type={isPasswordShow ? 'text' : 'password'}
-            {...register('password')}
+            {...register('password', { required: true })}
             className="input input-lg rounded-xl w-full outline-0 text-sm pr-12"
           />
           <button
