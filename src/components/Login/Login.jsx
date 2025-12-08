@@ -4,7 +4,11 @@ import { useForm } from 'react-hook-form';
 
 const Login = ({ setLoginModal }) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const handleLogin = data => {
     console.log(data);
@@ -17,10 +21,19 @@ const Login = ({ setLoginModal }) => {
             Email
           </legend>
           <input
-            type="email"
-            {...register('email', { required: true })}
+            type="text"
+            {...register('email', {
+              required: true,
+              pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+            })}
             className="input input-lg rounded-xl w-full outline-0 text-sm"
           />
+          {errors.email?.type === 'required' && (
+            <p className="text-red-500">Email is required</p>
+          )}
+          {errors.email?.type === 'pattern' && (
+            <p className="text-red-500">Enter valid email</p>
+          )}
         </fieldset>
 
         <fieldset className="fieldset relative">
@@ -29,7 +42,11 @@ const Login = ({ setLoginModal }) => {
           </legend>
           <input
             type={isPasswordShow ? 'text' : 'password'}
-            {...register('password', { required: true })}
+            {...register('password', {
+              required: true,
+              pattern:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            })}
             className="input input-lg rounded-xl w-full outline-0 text-sm pr-12"
           />
           <button
@@ -39,6 +56,24 @@ const Login = ({ setLoginModal }) => {
           >
             {isPasswordShow ? <EyeOff /> : <Eye />}
           </button>
+
+          {errors.password?.type === 'required' && (
+            <p className="text-red-500">Password is required</p>
+          )}
+
+          {errors.password?.type === 'pattern' && (
+            <p className="text-red-500">
+              Must be more than 8 characters, including
+              <br />
+              At least one number
+              <br />
+              At least one lowercase letter
+              <br />
+              At least one uppercase letter
+              <br />
+              At least one spacial character
+            </p>
+          )}
         </fieldset>
 
         <div className="flex items-center gap-2 pb-2">

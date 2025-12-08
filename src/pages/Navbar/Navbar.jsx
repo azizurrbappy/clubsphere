@@ -46,14 +46,12 @@ const Navbar = () => {
             <li>
               <Link to="/find/source=Clubs">Clubs</Link>
             </li>
-            <li>
-              <button
-                className="cursor-pointer"
-                onClick={() => onboardingModal('login')}
-              >
-                Login
-              </button>
-            </li>
+            <button
+              className="cursor-pointer"
+              onClick={() => onboardingModal('login')}
+            >
+              <li>Login</li>
+            </button>
           </ul>
           <button
             onClick={() => onboardingModal()}

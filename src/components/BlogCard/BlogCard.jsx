@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const BlogCard = () => {
   return (
-    <Link to="/" className="max-w-fit">
+    <div className="max-w-fit">
       <img
         className=" rounded-3xl"
         src="https://secure.meetupstatic.com/photos/event/6/0/f/a/highres_531384826.webp?w=640"
@@ -26,7 +26,7 @@ const BlogCard = () => {
           Read More
         </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

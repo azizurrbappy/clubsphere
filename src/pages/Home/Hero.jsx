@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { use } from 'react';
+import { AuthModal } from '../../Context/AuthModal';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -30,6 +32,8 @@ const lineVariants = {
 };
 
 const Hero = () => {
+  const { onboardingModal } = use(AuthModal);
+
   return (
     <motion.section
       className="flex items-center justify-center flex-col min-h-[calc(100vh-30vh)] gap-9"
@@ -86,6 +90,7 @@ const Hero = () => {
       </motion.p>
 
       <motion.button
+        onClick={() => () => onboardingModal()}
         className="btn h-fit px-5 py-3 rounded-full text-base bg-[#3659e3] text-white"
         variants={itemVariants}
         whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(0,0,0,0.15)' }}
