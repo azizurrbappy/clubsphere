@@ -90,7 +90,7 @@ const Hero = () => {
       </motion.p>
 
       <motion.button
-        onClick={() => () => onboardingModal()}
+        onClick={() => onboardingModal()}
         className="btn h-fit px-5 py-3 rounded-full text-base bg-[#3659e3] text-white"
         variants={itemVariants}
         whileHover={{ scale: 1.05, boxShadow: '0 10px 25px rgba(0,0,0,0.15)' }}

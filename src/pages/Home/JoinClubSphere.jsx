@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
+import { use } from 'react';
 import { Link } from 'react-router';
+import { AuthModal } from '../../Context/AuthModal';
 
 const JoinClubSphere = () => {
+  const { onboardingModal } = use(AuthModal);
+
   return (
     <motion.section
       className="max-w-[1000px] mx-auto h-[392px] border border-gray-300 rounded-4xl flex items-center justify-center p-10 mt-8 mb-30"
@@ -44,9 +48,12 @@ const JoinClubSphere = () => {
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}
           >
-            <Link className="btn h-fit px-5 py-3 rounded-full text-base bg-[#3659e3] text-white">
+            <button
+              onClick={() => onboardingModal()}
+              className="btn h-fit px-5 py-3 rounded-full text-base bg-[#3659e3] text-white"
+            >
               Join ClubSphere
-            </Link>
+            </button>
           </motion.div>
         </motion.div>
       </div>

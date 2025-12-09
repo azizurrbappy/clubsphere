@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { use } from 'react';
 import Container from '../../components/Container/Container';
 import { Link } from 'react-router';
 import { ArrowRight, Facebook, Github, Linkedin } from 'lucide-react';
+import { AuthModal } from '../../Context/AuthModal';
 
 const Footer = () => {
+  const { onboardingModal } = use(AuthModal);
+
   return (
     <footer className="bg-[#1e0a3d] text-[#ffffff7f] py-10">
       <Container className="flex justify-between flex-wrap">
@@ -31,8 +34,15 @@ const Footer = () => {
       <Container className="footer sm:footer-horizontal mb-20">
         <nav className="space-y-2">
           <h6 className="text-white mb-3">Your Account</h6>
-          <Link className="link link-hover">Sign up</Link>
-          <Link className="link link-hover">Login</Link>
+          <Link onClick={() => onboardingModal()} className="link link-hover">
+            Sign up
+          </Link>
+          <Link
+            onClick={() => onboardingModal('login')}
+            className="link link-hover"
+          >
+            Login
+          </Link>
           <Link className="link link-hover">Help</Link>
         </nav>
         <nav className="space-y-2">
