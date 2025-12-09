@@ -16,6 +16,15 @@ html {
   themes: light --default;
 }
 
+/* Remove Scrollbar from modal */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Check */
 .check {
   @apply border border-red-500;

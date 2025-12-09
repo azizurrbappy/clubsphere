@@ -2,12 +2,13 @@ import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const Login = ({ setLoginModal }) => {
+const Login = ({ setLoginModal, setSignUpModal }) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const handleLogin = data => {
@@ -105,7 +106,10 @@ const Login = ({ setLoginModal }) => {
             <p className="text-[#232326]text-center">
               Do not have an account yet?{' '}
               <button
-                onClick={() => setLoginModal(false)}
+                onClick={() => {
+                  setLoginModal(false);
+                  reset();
+                }}
                 className="text-[#3659e3] font-semibold cursor-pointer"
               >
                 Sign up
