@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { AuthModal } from '../Context/AuthModal';
 import { ArrowLeft, X } from 'lucide-react';
-import { Link } from 'react-router';
 import Login from '../components/Login/Login';
 import SignUp from '../components/SignUp/SignUp';
+import { AuthContext } from '../Context/AuthContext';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
 
 const ModalProvider = ({ children }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [signUpModal, setSignUpModal] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
+  const { user, signInWithGoogle, setLoading } = use(AuthContext);
+  const axios = useAxiosSecure();
 
   const onboardingModal = (modalType = '') => {
     if (modalType === 'login') {
@@ -23,6 +27,34 @@ const ModalProvider = ({ children }) => {
   const modalContextValue = {
     onboardingModal,
   };
+
+  // Firebase Provider
+  const googleSignIn = async () => {
+    try {
+      const currentUser = await signInWithGoogle();
+      const { displayName, email, photoURL } = currentUser.user;
+      const credential = {
+        name: displayName,
+        email: email,
+        photoURL: photoURL,
+        location: 'N/A',
+        age: false,
+        signInWith: 'google',
+        createdAt: new Date().toISOString(),
+      };
+      await axios.post('/users', credential);
+      toast.success('Successfully sign in with google!');
+      setLoading(false);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  };
+
+  const gitHubSignIn = () => {
+    toast.info('GitHub sign in coming soon...');
+  };
+
   return (
     <AuthModal value={modalContextValue}>
       {/* Main Content */}
@@ -64,7 +96,10 @@ const ModalProvider = ({ children }) => {
 
               {!signUpModal && (
                 <div className="flex flex-col gap-3">
-                  <button className="btn bg-transparent text-black border-[#e5e5e5] py-6 px-6 rounded-full text-lg font-semibold">
+                  <button
+                    onClick={googleSignIn}
+                    className="btn bg-transparent text-black border-[#e5e5e5] py-6 px-6 rounded-full text-lg font-semibold"
+                  >
                     <svg
                       aria-label="Google logo"
                       width="18"
@@ -95,7 +130,10 @@ const ModalProvider = ({ children }) => {
                     {loginModal ? 'Login' : 'Continue'} with Google
                   </button>
 
-                  <button className="btn bg-transparent text-black border-[#e5e5e5] py-6 px-6 rounded-full text-lg font-semibold">
+                  <button
+                    onClick={gitHubSignIn}
+                    className="btn bg-transparent text-black border-[#e5e5e5] py-6 px-6 rounded-full text-lg font-semibold"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       x="0px"
