@@ -11,7 +11,8 @@ const ModalProvider = ({ children }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [signUpModal, setSignUpModal] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
-  const { user, signInWithGoogle, setLoading } = use(AuthContext);
+  const { user, signInWithGoogle, setLoading, loading, signInWithGitHub } =
+    use(AuthContext);
   const axios = useAxiosSecure();
 
   const onboardingModal = (modalType = '') => {
@@ -32,17 +33,27 @@ const ModalProvider = ({ children }) => {
   const googleSignIn = async () => {
     try {
       const currentUser = await signInWithGoogle();
-      const { displayName, email, photoURL } = currentUser.user;
+      const { providerId } = currentUser;
+      const { displayName, email, photoURL, metadata, emailVerified } =
+        currentUser.user;
+      const { creationTime, lastSignInTime } = metadata;
+
       const credential = {
         name: displayName,
         email: email,
+        emailVerified: emailVerified,
         photoURL: photoURL,
         location: 'N/A',
         age: false,
-        signInWith: 'google',
-        createdAt: new Date().toISOString(),
+        role: 'member',
+        providerId: providerId,
+        metadata: {
+          creationTime: creationTime,
+          lastSignInTime: lastSignInTime,
+        },
       };
       await axios.post('/users', credential);
+
       toast.success('Successfully sign in with google!');
       setLoading(false);
     } catch (error) {
@@ -51,8 +62,36 @@ const ModalProvider = ({ children }) => {
     }
   };
 
-  const gitHubSignIn = () => {
-    toast.info('GitHub sign in coming soon...');
+  const gitHubSignIn = async () => {
+    try {
+      const currentUser = await signInWithGitHub();
+      const { providerId } = currentUser;
+      const { displayName, email, photoURL, metadata, emailVerified } =
+        currentUser.user;
+      const { creationTime, lastSignInTime } = metadata;
+
+      const credential = {
+        name: displayName,
+        email: email,
+        emailVerified: emailVerified,
+        photoURL: photoURL,
+        location: 'N/A',
+        age: false,
+        role: 'member',
+        providerId: providerId,
+        metadata: {
+          creationTime: creationTime,
+          lastSignInTime: lastSignInTime,
+        },
+      };
+      await axios.post('/users', credential);
+
+      toast.success('Successfully sign in with google!');
+      setLoading(false);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -151,7 +190,11 @@ const ModalProvider = ({ children }) => {
 
               {!signUpModal && (
                 <div className="divider divide-[#d0d0d4] text-sm text-[#69696c]">
-                  or
+                  {loading ? (
+                    <span className="loading loading-infinity text-[#3659e3]"></span>
+                  ) : (
+                    <p>or</p>
+                  )}
                 </div>
               )}
 

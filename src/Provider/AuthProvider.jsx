@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import {
+  GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
@@ -13,11 +14,17 @@ const AuthProvider = ({ children }) => {
 
   // Firebase Provider
   const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
 
   // Firebase
   const signInWithGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
+  };
+
+  const signInWithGitHub = () => {
+    setLoading(true);
+    return signInWithPopup(auth, githubProvider);
   };
 
   useEffect(() => {
@@ -31,7 +38,14 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const authInfo = { user, setUser, loading, setLoading, signInWithGoogle };
+  const authInfo = {
+    user,
+    setUser,
+    loading,
+    setLoading,
+    signInWithGoogle,
+    signInWithGitHub,
+  };
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
