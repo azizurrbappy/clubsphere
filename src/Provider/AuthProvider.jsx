@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import {
+  createUserWithEmailAndPassword,
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
 
@@ -27,6 +30,24 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, githubProvider);
   };
 
+  const signUpWithEmail = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const loginWithEmail = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const updateUserProfile = (user, userName, userPhoto) => {
+    setLoading(true);
+    return updateProfile(user, {
+      displayName: userName,
+      photoURL: userPhoto,
+    });
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser);
@@ -45,6 +66,9 @@ const AuthProvider = ({ children }) => {
     setLoading,
     signInWithGoogle,
     signInWithGitHub,
+    signUpWithEmail,
+    loginWithEmail,
+    updateUserProfile,
   };
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;

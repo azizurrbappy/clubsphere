@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import { AuthModal } from '../Context/AuthModal';
 import { ArrowLeft, X } from 'lucide-react';
 import Login from '../components/Login/Login';
@@ -6,13 +6,13 @@ import SignUp from '../components/SignUp/SignUp';
 import { AuthContext } from '../Context/AuthContext';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import useAuth from '../hooks/useAuth';
 
 const ModalProvider = ({ children }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [signUpModal, setSignUpModal] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
-  const { user, signInWithGoogle, setLoading, loading, signInWithGitHub } =
-    use(AuthContext);
+  const { signInWithGoogle, setLoading, loading, signInWithGitHub } = useAuth();
   const axios = useAxiosSecure();
 
   const onboardingModal = (modalType = '') => {
@@ -25,8 +25,15 @@ const ModalProvider = ({ children }) => {
     }
   };
 
+  const resetModal = () => {
+    setIsAuthModalOpen(false);
+    setSignUpModal(false);
+    setLoginModal(false);
+  };
+
   const modalContextValue = {
     onboardingModal,
+    resetModal,
   };
 
   // Firebase Provider
@@ -34,11 +41,12 @@ const ModalProvider = ({ children }) => {
     try {
       const currentUser = await signInWithGoogle();
       const { providerId } = currentUser;
-      const { displayName, email, photoURL, metadata, emailVerified } =
+      const { displayName, email, photoURL, metadata, emailVerified, uid } =
         currentUser.user;
       const { creationTime, lastSignInTime } = metadata;
 
       const credential = {
+        userID: uid,
         name: displayName,
         email: email,
         emailVerified: emailVerified,
@@ -66,11 +74,12 @@ const ModalProvider = ({ children }) => {
     try {
       const currentUser = await signInWithGitHub();
       const { providerId } = currentUser;
-      const { displayName, email, photoURL, metadata, emailVerified } =
+      const { displayName, email, photoURL, metadata, emailVerified, uid } =
         currentUser.user;
       const { creationTime, lastSignInTime } = metadata;
 
       const credential = {
+        userID: uid,
         name: displayName,
         email: email,
         emailVerified: emailVerified,

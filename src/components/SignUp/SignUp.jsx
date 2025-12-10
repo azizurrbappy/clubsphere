@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
+import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
+import { updateProfile } from 'firebase/auth';
 
 const SignUp = ({ setLoginModal, setSignUpModal }) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
+  const axios = useAxiosSecure();
+  const { signUpWithEmail, updateUserProfile, setLoading, loading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -11,10 +17,45 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
     reset,
   } = useForm();
 
-  const handleSignUp = data => {
-    console.log(data);
-    reset();
+  const handleSignUp = async data => {
+    try {
+      const { user } = await signUpWithEmail(data.userEmail, data.userPassword);
+      await updateUserProfile(user, data.userName, data.userPhoto);
+
+      const { displayName, photoURL, email, emailVerified, metadata, uid } =
+        user;
+      const { creationTime, lastSignInTime } = metadata;
+
+      const credential = {
+        name: displayName,
+        email: email,
+        emailVerified: emailVerified,
+        photoURL: photoURL,
+        location: data.location || 'N/A',
+        age: data.age,
+        role: 'member',
+        providerId: 'password',
+        userID: uid,
+        metadata: {
+          creationTime: creationTime,
+          lastSignInTime: lastSignInTime,
+        },
+      };
+      await axios.post('/users?providerId=password', credential).then(res => {
+        if (res.data.insertedId) {
+          toast.success('Signup successful!');
+          reset();
+          setLoading(false);
+        }
+      });
+    } catch (error) {
+      if (error.response.data.error) {
+        toast.error(error.response.data.error);
+        setLoading(false);
+      }
+    }
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(handleSignUp)} className="space-y-2">
@@ -24,7 +65,7 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
           </legend>
           <input
             type="text"
-            {...register('name', {
+            {...register('userName', {
               required: true,
               minLength: 2,
             })}
@@ -50,7 +91,7 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
           </legend>
           <input
             type="text"
-            {...register('photoURL', {
+            {...register('userPhoto', {
               required: true,
               minLength: 2,
             })}
@@ -78,7 +119,7 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
           </legend>
           <input
             type="text"
-            {...register('email', {
+            {...register('userEmail', {
               required: true,
               pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
             })}
@@ -105,7 +146,7 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
           </legend>
           <input
             type={isPasswordShow ? 'text' : 'password'}
-            {...register('password', {
+            {...register('userPassword', {
               required: true,
               pattern:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,

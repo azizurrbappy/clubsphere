@@ -1,9 +1,14 @@
 import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const Login = ({ setLoginModal }) => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
+  const axios = useAxiosSecure();
+  const { setLoading, loginWithEmail } = useAuth();
   const {
     register,
     handleSubmit,
@@ -11,9 +16,30 @@ const Login = ({ setLoginModal }) => {
     reset,
   } = useForm();
 
-  const handleLogin = data => {
-    console.log(data);
+  const handleLogin = async data => {
+    try {
+      const res = await axios(`/user?email=${data.userEmail}`);
+
+      if (res.data.email === data.userEmail) {
+        await loginWithEmail(data.userEmail, data.userPassword).then(
+          userCredential => {
+            console.log(userCredential.user);
+            reset();
+
+            setLoading(false);
+          }
+        );
+      } else {
+        toast.error('Email does not match. Please check your email address.');
+      }
+    } catch (error) {
+      if (error.response.data.error) {
+        toast.error(error.response.data.error);
+        setLoading(false);
+      }
+    }
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(handleLogin)} className="space-y-2">
@@ -23,7 +49,7 @@ const Login = ({ setLoginModal }) => {
           </legend>
           <input
             type="text"
-            {...register('email', {
+            {...register('userEmail', {
               required: true,
               pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
             })}
@@ -43,7 +69,7 @@ const Login = ({ setLoginModal }) => {
           </legend>
           <input
             type={isPasswordShow ? 'text' : 'password'}
-            {...register('password', {
+            {...register('userPassword', {
               required: true,
               pattern:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
