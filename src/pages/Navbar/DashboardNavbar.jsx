@@ -12,7 +12,7 @@ import {
 import { AuthModal } from '../../Context/AuthModal';
 import useAuth from '../../hooks/useAuth';
 
-const Navbar = () => {
+const DashboardNavbar = () => {
   const { onboardingModal } = use(AuthModal);
   const { user, loading, setLoading, signOutUser } = useAuth();
 
@@ -25,7 +25,9 @@ const Navbar = () => {
     <div className="sticky top-0 backdrop-blur-2xl shadow-sm z-50">
       <Container className="navbar">
         <div className="navbar-start space-x-10">
-          <Link className="text-[#3659e3] text-lg font-bold">ClubSphere</Link>
+          <Link to="/" className="text-[#3659e3] text-lg font-bold">
+            ClubSphere
+          </Link>
 
           <div>
             <form className="input outline-0 rounded-full pl-4 pr-0  h-fit hidden sm:flex">
@@ -76,7 +78,7 @@ const Navbar = () => {
                     <img
                       src={user.photoURL}
                       alt="User Avatar"
-                      className="w-full h-full object-cover rounded-full"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ) : (
@@ -115,7 +117,7 @@ const Navbar = () => {
                   <hr className="text-[#ebebee] my-3" />
 
                   <li>
-                    <NavLink to="/dashboard" className="text-[#3a3a3d] text-sm">
+                    <NavLink className="text-[#3a3a3d] text-sm">
                       <Gauge size={16} /> Dashboard
                     </NavLink>
                   </li>
@@ -150,4 +152,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default DashboardNavbar;

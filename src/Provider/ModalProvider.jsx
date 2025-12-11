@@ -12,10 +12,14 @@ const ModalProvider = ({ children }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [signUpModal, setSignUpModal] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
-  const { signInWithGoogle, setLoading, loading, signInWithGitHub } = useAuth();
+  const { signInWithGoogle, setLoading, loading, signInWithGitHub, user } =
+    useAuth();
   const axios = useAxiosSecure();
 
   const onboardingModal = (modalType = '') => {
+    if (user) {
+      return;
+    }
     if (modalType === 'login') {
       setIsAuthModalOpen(true);
       setLoginModal(true);
@@ -61,9 +65,9 @@ const ModalProvider = ({ children }) => {
         },
       };
       await axios.post('/users', credential);
-
-      toast.success('Successfully sign in with google!');
+      resetModal();
       setLoading(false);
+      toast.success('Successfully sign in with google!');
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
@@ -94,9 +98,9 @@ const ModalProvider = ({ children }) => {
         },
       };
       await axios.post('/users', credential);
-
-      toast.success('Successfully sign in with google!');
+      resetModal();
       setLoading(false);
+      toast.success('Successfully sign in with google!');
     } catch (error) {
       toast.error(error.message);
       setLoading(false);

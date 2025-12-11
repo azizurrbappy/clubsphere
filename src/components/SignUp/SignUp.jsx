@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import { updateProfile } from 'firebase/auth';
+import { AuthModal } from '../../Context/AuthModal';
 
 const SignUp = ({ setLoginModal, setSignUpModal }) => {
+  const { resetModal } = use(AuthModal);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const axios = useAxiosSecure();
   const { signUpWithEmail, updateUserProfile, setLoading, loading } = useAuth();
@@ -44,6 +46,7 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
       await axios.post('/users?providerId=password', credential).then(res => {
         if (res.data.insertedId) {
           toast.success('Signup successful!');
+          resetModal();
           reset();
           setLoading(false);
         }

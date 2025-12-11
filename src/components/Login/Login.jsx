@@ -1,11 +1,13 @@
 import { Eye, EyeOff } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import { AuthModal } from '../../Context/AuthModal';
 
 const Login = ({ setLoginModal }) => {
+  const { resetModal } = use(AuthModal);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const axios = useAxiosSecure();
   const { setLoading, loginWithEmail } = useAuth();
@@ -21,14 +23,10 @@ const Login = ({ setLoginModal }) => {
       const res = await axios(`/user?email=${data.userEmail}`);
 
       if (res.data.email === data.userEmail) {
-        await loginWithEmail(data.userEmail, data.userPassword).then(
-          userCredential => {
-            console.log(userCredential.user);
-            reset();
-
-            setLoading(false);
-          }
-        );
+        await loginWithEmail(data.userEmail, data.userPassword);
+        resetModal();
+        reset();
+        setLoading(false);
       } else {
         toast.error('Email does not match. Please check your email address.');
       }
