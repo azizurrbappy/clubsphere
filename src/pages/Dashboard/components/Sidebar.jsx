@@ -4,6 +4,8 @@ import {
   Calendar,
   CalendarDays,
   CalendarPlus2,
+  ClipboardClock,
+  ClipboardList,
   Gauge,
   UserRoundPlus,
   UserRoundSearch,
@@ -66,7 +68,7 @@ const Sidebar = () => {
                 {role?.role}
               </div>
             )}
-            {role.role === 'admin' && (
+            {role.role === 'member' && (
               <div className="badge badge-soft badge-sm badge-warning rounded-full">
                 {role?.role}
               </div>
@@ -87,17 +89,17 @@ const Sidebar = () => {
             <>
               <NavLink to="/dashboard">
                 <li>
-                  <UserRoundPlus size={18} /> Clubs request
+                  <ClipboardList size={18} /> Clubs request
                 </li>
               </NavLink>
               <NavLink to="/dashboard">
                 <li>
-                  <UserRoundPlus size={18} /> See members
+                  <Users size={18} /> See members
                 </li>
               </NavLink>
               <NavLink to="/dashboard">
                 <li>
-                  <UserRoundPlus size={18} /> Payment history
+                  <ClipboardClock size={18} /> Payment history
                 </li>
               </NavLink>
             </>

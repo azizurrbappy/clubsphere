@@ -5,6 +5,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import { AuthModal } from '../../Context/AuthModal';
+import { useNavigate } from 'react-router';
 
 const Login = ({ setLoginModal }) => {
   const { resetModal } = use(AuthModal);
@@ -58,10 +59,10 @@ const Login = ({ setLoginModal }) => {
             })}
             className="input input-lg rounded-xl w-full outline-0 text-sm"
           />
-          {errors.email?.type === 'required' && (
+          {errors.userEmail?.type === 'required' && (
             <p className="text-red-500">Email is required</p>
           )}
-          {errors.email?.type === 'pattern' && (
+          {errors.userEmail?.type === 'pattern' && (
             <p className="text-red-500">Enter valid email</p>
           )}
         </fieldset>
@@ -87,11 +88,11 @@ const Login = ({ setLoginModal }) => {
             {isPasswordShow ? <EyeOff /> : <Eye />}
           </button>
 
-          {errors.password?.type === 'required' && (
+          {errors.userPassword?.type === 'required' && (
             <p className="text-red-500">Password is required</p>
           )}
 
-          {errors.password?.type === 'pattern' && (
+          {errors.userPassword?.type === 'pattern' && (
             <p className="text-red-500">
               Must be more than 8 characters, including
               <br />

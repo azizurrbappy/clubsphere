@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import { AuthModal } from '../Context/AuthModal';
 
 const PrivetRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
+  const { resetModal, onboardingModal } = use(AuthModal);
 
   if (loading) {
     return (
@@ -20,7 +22,7 @@ const PrivetRoute = ({ children }) => {
   }
 
   if (!user) {
-    return <Navigate to="/" state={location.pathname}></Navigate>;
+    return <Navigate to="/"></Navigate>;
   }
 
   return children;

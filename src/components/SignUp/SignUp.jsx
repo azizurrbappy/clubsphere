@@ -4,11 +4,10 @@ import { Eye, EyeOff } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
-import { updateProfile } from 'firebase/auth';
 import { AuthModal } from '../../Context/AuthModal';
 
 const SignUp = ({ setLoginModal, setSignUpModal }) => {
-  const { resetModal } = use(AuthModal);
+  const { resetModal, onboardingModal } = use(AuthModal);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const axios = useAxiosSecure();
   const { signUpWithEmail, updateUserProfile, setLoading, loading } = useAuth();
@@ -21,6 +20,17 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
 
   const handleSignUp = async data => {
     try {
+      // Check user
+      const res = await axios(`/user?email=${data.userEmail}`);
+      if (res.data.email === data.userEmail) {
+        reset();
+        onboardingModal('login');
+        setLoading(false);
+        return toast.error(
+          'Sorry! This email address is already in use. Please login.'
+        );
+      }
+
       const { user } = await signUpWithEmail(data.userEmail, data.userPassword);
       await updateUserProfile(user, data.userName, data.userPhoto);
 
@@ -48,6 +58,7 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
           toast.success('Signup successful!');
           resetModal();
           reset();
+
           setLoading(false);
         }
       });
@@ -75,15 +86,15 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
             className="input input-lg rounded-xl w-full outline-0 text-sm"
             placeholder="Your full name here"
           />
-          {!errors.name && (
+          {!errors.userName && (
             <p className="text-[#7d7d82] mt-1">
               Your name will be public on your ClubSphere profile
             </p>
           )}
-          {errors.name?.type === 'required' && (
+          {errors.userName?.type === 'required' && (
             <p className="text-red-500">Name is required</p>
           )}
-          {errors.name?.type === 'minLength' && (
+          {errors.userName?.type === 'minLength' && (
             <p className="text-red-500">Name has to be at least 2 characters</p>
           )}
         </fieldset>
@@ -95,21 +106,17 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
           <input
             type="text"
             {...register('userPhoto', {
-              required: true,
               minLength: 2,
             })}
             className="input input-lg rounded-xl w-full outline-0 text-sm"
             placeholder="Your photo url here"
           />
-          {!errors.name && (
+          {!errors.userPhoto && (
             <p className="text-[#7d7d82] mt-1">
               Your photo will be public on your ClubSphere profile
             </p>
           )}
-          {errors.name?.type === 'required' && (
-            <p className="text-red-500">Photo url is required</p>
-          )}
-          {errors.name?.type === 'minLength' && (
+          {errors.userPhoto?.type === 'minLength' && (
             <p className="text-red-500">
               Photo url has to be at least 2 characters
             </p>
@@ -129,16 +136,16 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
             className="input input-lg rounded-xl w-full outline-0 text-sm"
             placeholder="example@email.com"
           />
-          {!errors.email && (
+          {!errors.userEmail && (
             <p className="text-[#7d7d82] mt-1">
               We’ll use your email address to send you updates and to verify
               your account
             </p>
           )}
-          {errors.email?.type === 'required' && (
+          {errors.userEmail?.type === 'required' && (
             <p className="text-red-500">Email is required</p>
           )}
-          {errors.email?.type === 'pattern' && (
+          {errors.userEmail?.type === 'pattern' && (
             <p className="text-red-500">Enter valid email</p>
           )}
         </fieldset>
@@ -164,11 +171,11 @@ const SignUp = ({ setLoginModal, setSignUpModal }) => {
             {isPasswordShow ? <EyeOff /> : <Eye />}
           </button>
 
-          {errors.password?.type === 'required' && (
+          {errors.userPassword?.type === 'required' && (
             <p className="text-red-500">Password is required</p>
           )}
 
-          {errors.password?.type === 'pattern' && (
+          {errors.userPassword?.type === 'pattern' && (
             <p className="text-red-500">
               Must be more than 8 characters, including
               <br />
