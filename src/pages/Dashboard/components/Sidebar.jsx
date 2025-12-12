@@ -1,70 +1,171 @@
 import React from 'react';
-import { Calendar, Users } from 'lucide-react';
+import {
+  BookUser,
+  Calendar,
+  CalendarDays,
+  CalendarPlus2,
+  Gauge,
+  UserRoundPlus,
+  UserRoundSearch,
+  Users,
+  UsersRound,
+} from 'lucide-react';
+import useAuth from '../../../hooks/useAuth';
+import { NavLink } from 'react-router';
+import useRole from '../../../hooks/useRole';
 
 const Sidebar = () => {
-    // Mock data for sidebar for now
-    const eventsCount = 0;
-    const groupsCount = 0;
+  const { user } = useAuth();
+  const { role } = useRole();
 
-    return (
-        <div className="space-y-6">
-            {/* Profile / Stats */}
-            <div className="bg-base-100 p-4 rounded-xl border border-gray-200">
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="avatar placeholder">
-                        <div className="bg-neutral text-neutral-content rounded-full w-12">
-                            <span className="text-xl">A</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 className="font-bold text-sm">Azizur Rahman Bappy</h3>
-                        <p className="text-xs text-gray-500">Komilla</p>
-                    </div>
-                </div>
+  return (
+    <div className="space-y-6">
+      {/* Profile / Stats */}
+      <div className="bg-base-100 p-4 rounded-xl border border-gray-200 flex items-center gap-2">
+        <div tabIndex={0} role="button" className="cursor-pointer">
+          {user.photoURL ? (
+            <div
+              tabIndex={0}
+              role="button"
+              className="size-[35px] rounded-full flex justify-center items-center border border-[#ebebee]"
+            >
+              <img
+                src={user.photoURL}
+                alt="User Avatar"
+                className="w-full h-full object-cover rounded-full"
+              />
             </div>
-
-            {/* Your events menu */}
-            <div className="bg-base-100 p-4 rounded-xl border border-gray-200">
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-bold text-lg">Your events</h3>
-                    <a href="#" className="text-sm text-primary font-semibold">See all</a>
-                </div>
-
-                <div className="flex gap-4 mb-6">
-                    <button className="btn btn-sm btn-outline flex-1 gap-2">
-                        <Calendar size={16} /> Going
-                    </button>
-                    <button className="btn btn-sm btn-outline flex-1 gap-2">
-                        Saved
-                    </button>
-                </div>
-
-                <div className="text-center py-6">
-                    <div className="mx-auto w-12 h-12 mb-2 flex items-center justify-center bg-gray-100 rounded-full">
-                        <Calendar className="text-gray-400" size={24} />
-                    </div>
-                    <p className="text-gray-600 text-sm mb-4">No plans yet? Let's fix that!</p>
-                    <button className="btn btn-neutral btn-sm rounded-full">Find events</button>
-                </div>
+          ) : (
+            <div
+              className="size-[35px] rounded-full flex justify-center items-center"
+              style={{
+                backgroundImage:
+                  'url("https://secure.meetupstatic.com/next/images/avatar/background-0.webp")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center center',
+              }}
+            >
+              <button className="text-center font-medium">
+                {user.displayName.split(' ')[0].split('')[0]}
+              </button>
             </div>
-
-            {/* Your groups menu */}
-            <div className="bg-base-100 p-4 rounded-xl border border-gray-200">
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-bold text-lg">Your groups</h3>
-                    <a href="#" className="text-sm text-primary font-semibold">See all</a>
-                </div>
-                <div className="text-center py-6">
-                    <div className="mx-auto w-12 h-12 mb-2 flex items-center justify-center bg-gray-100 rounded-full">
-                        <Users className="text-gray-400" size={24} />
-                    </div>
-                    <p className="text-gray-600 text-sm mb-4">Looking for your people?</p>
-                    <p className="text-xs text-gray-500 mb-4 px-4">Join a group that shares your passions and start connecting today.</p>
-                    <button className="btn btn-neutral btn-sm rounded-full">Explore groups near you</button>
-                </div>
-            </div>
+          )}
         </div>
-    );
+        <div>
+          <h5 className="text-sm text-[#232326] font-semibold">
+            {user?.displayName}
+          </h5>
+          <div>
+            {role.role === 'admin' && (
+              <div className="badge badge-soft badge-sm badge-secondary rounded-full">
+                {role?.role}
+              </div>
+            )}
+            {role.role === 'clubManager' && (
+              <div className="badge badge-soft badge-sm badge-primary rounded-full">
+                {role?.role}
+              </div>
+            )}
+            {role.role === 'admin' && (
+              <div className="badge badge-soft badge-sm badge-warning rounded-full">
+                {role?.role}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Your events menu */}
+      <div className="bg-base-100 p-4 rounded-xl border border-gray-200">
+        <ul className="sidebar-links">
+          <NavLink to="/dashboard">
+            <li>
+              <Gauge size={18} /> Dashboard
+            </li>
+          </NavLink>
+          {role.role === 'admin' && (
+            <>
+              <NavLink to="/dashboard">
+                <li>
+                  <UserRoundPlus size={18} /> Clubs request
+                </li>
+              </NavLink>
+              <NavLink to="/dashboard">
+                <li>
+                  <UserRoundPlus size={18} /> See members
+                </li>
+              </NavLink>
+              <NavLink to="/dashboard">
+                <li>
+                  <UserRoundPlus size={18} /> Payment history
+                </li>
+              </NavLink>
+            </>
+          )}
+          {role.role === 'clubManager' && (
+            <>
+              <NavLink to="/dashboard">
+                <li>
+                  <UserRoundPlus size={18} /> Create club
+                </li>
+              </NavLink>
+              <NavLink to="/dashboard">
+                <li>
+                  <CalendarPlus2 size={18} /> Create event
+                </li>
+              </NavLink>
+              <NavLink to="/dashboard">
+                <li>
+                  <UserRoundSearch size={18} /> See members
+                </li>
+              </NavLink>
+            </>
+          )}
+          {role.role === 'member' && (
+            <>
+              <NavLink to="/dashboard">
+                <li>
+                  <CalendarDays size={18} /> Your events
+                </li>
+              </NavLink>
+              <NavLink to="/dashboard">
+                <li>
+                  <UsersRound size={18} /> Your clubs
+                </li>
+              </NavLink>
+              <NavLink to="/dashboard">
+                <li>
+                  <BookUser size={18} /> Be a club Manager
+                </li>
+              </NavLink>
+            </>
+          )}
+        </ul>
+      </div>
+
+      {/* Your clubs menu */}
+      <div className="bg-base-100 p-4 rounded-xl border border-gray-200">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="font-bold text-lg">Your clubs</h3>
+          <a href="#" className="text-sm text-primary font-semibold">
+            See all
+          </a>
+        </div>
+        <div className="text-center py-6">
+          <div className="mx-auto w-12 h-12 mb-2 flex items-center justify-center bg-gray-100 rounded-full">
+            <Users className="text-gray-400" size={24} />
+          </div>
+          <p className="text-gray-600 text-sm mb-4">Looking for your people?</p>
+          <p className="text-xs text-gray-500 mb-4 px-4">
+            Join a clubs that shares your passions and start connecting today.
+          </p>
+          <button className="btn btn-neutral btn-sm rounded-full">
+            Explore clubs near you
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Sidebar;

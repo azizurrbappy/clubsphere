@@ -39,3 +39,8 @@ html {
 .type option {
   @apply w-60 p-1.5 rounded-2xl;
 }
+
+/* Dashboard */
+.sidebar-links li {
+  @apply flex items-center gap-2 font-medium text-sm hover:bg-gray-100 py-1.5 px-2.5 rounded-md cursor-pointer mb-1 duration-150;
+}

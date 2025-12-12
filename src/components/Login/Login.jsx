@@ -22,14 +22,19 @@ const Login = ({ setLoginModal }) => {
     try {
       const res = await axios(`/user?email=${data.userEmail}`);
 
-      if (res.data.email === data.userEmail) {
-        await loginWithEmail(data.userEmail, data.userPassword);
-        resetModal();
-        reset();
-        setLoading(false);
-      } else {
-        toast.error('Email does not match. Please check your email address.');
+      if (
+        res.data.email !== data.userEmail ||
+        res.data.providerId !== 'password'
+      ) {
+        return toast.error(
+          'The email or password is incorrect. Please try again with the correct information.'
+        );
       }
+
+      await loginWithEmail(data.userEmail, data.userPassword);
+      resetModal();
+      reset();
+      setLoading(false);
     } catch (error) {
       if (error.response.data.error) {
         toast.error(error.response.data.error);

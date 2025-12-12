@@ -4,6 +4,7 @@ import Home from '../pages/Home/Home';
 import Find from '../pages/EventsClubs/Find';
 import DashboardLayout from '../layouts/DashboardLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
+import PrivetRoute from './PrivetRoute';
 
 export const Router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ export const Router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout></DashboardLayout>,
+    element: (
+      <PrivetRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivetRoute>
+    ),
     children: [
       {
         index: true,

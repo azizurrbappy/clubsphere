@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import Container from '../../components/Container/Container';
 import { Link, NavLink } from 'react-router';
 import {
@@ -6,6 +6,7 @@ import {
   DoorOpen,
   Gauge,
   Globe,
+  Menu,
   Search,
   UsersRound,
 } from 'lucide-react';
@@ -64,7 +65,7 @@ const DashboardNavbar = () => {
             </li>
           </ul>
 
-          <section className="pl-1.5">
+          <section className="pl-1.5 flex items-center gap-3">
             {loading ? (
               <div className="skeleton size-[35px] rounded-full"></div>
             ) : user ? (
@@ -78,7 +79,7 @@ const DashboardNavbar = () => {
                     <img
                       src={user.photoURL}
                       alt="User Avatar"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-full"
                     />
                   </div>
                 ) : (
