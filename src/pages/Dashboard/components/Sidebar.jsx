@@ -1,11 +1,11 @@
 import React from 'react';
 import {
   BookUser,
-  Calendar,
   CalendarDays,
   CalendarPlus2,
-  ClipboardClock,
   ClipboardList,
+  CreditCard,
+  FileUser,
   Gauge,
   UserRoundPlus,
   UserRoundSearch,
@@ -87,19 +87,19 @@ const Sidebar = () => {
           </NavLink>
           {role.role === 'admin' && (
             <>
-              <NavLink to="/dashboard">
+              <NavLink to="/dashboard/manage-user">
                 <li>
-                  <ClipboardList size={18} /> Clubs request
+                  <Users size={18} /> Manage User
                 </li>
               </NavLink>
               <NavLink to="/dashboard">
                 <li>
-                  <Users size={18} /> See members
+                  <ClipboardList size={18} /> Manage Club
                 </li>
               </NavLink>
               <NavLink to="/dashboard">
                 <li>
-                  <ClipboardClock size={18} /> Payment history
+                  <CreditCard size={18} /> View Payments
                 </li>
               </NavLink>
             </>

@@ -5,6 +5,7 @@ import Find from '../pages/EventsClubs/Find';
 import DashboardLayout from '../layouts/DashboardLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import PrivetRoute from './PrivetRoute';
+import SeeMembers from '../pages/Dashboard/SeeMembers/SeeMembers';
 
 export const Router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const Router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard></Dashboard>,
+      },
+      {
+        path: '/dashboard/manage-user',
+        element: <SeeMembers></SeeMembers>,
       },
     ],
   },
