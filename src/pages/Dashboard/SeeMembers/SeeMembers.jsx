@@ -41,8 +41,8 @@ const SeeMembers = () => {
       value: members?.filter(member => member.role === 'member')?.length || 0,
       isPositive: true,
       icon: Users,
-      iconBg: 'bg-[#f3f4f6]',
-      iconColor: 'text-[#3659e3]',
+      iconBg: 'bg-[#8280FF]',
+      iconColor: 'text-[#ffffff]',
     },
     {
       title: 'Club Managers',
@@ -50,15 +50,15 @@ const SeeMembers = () => {
         members?.filter(member => member.role === 'clubManager')?.length || 0,
       isPositive: false,
       icon: UserCog,
-      iconBg: 'bg-[#f3f4f6]',
-      iconColor: 'text-[#3659e3]',
+      iconBg: 'bg-[#FEC53D]',
+      iconColor: 'text-[#ffffff]',
     },
     {
       title: 'Total Members',
       value: members?.length,
       icon: Monitor,
-      iconBg: 'bg-[#f3f4f6]',
-      iconColor: 'text-[#3659e3]',
+      iconBg: 'bg-[#4AD991]',
+      iconColor: 'text-[#ffffff]',
     },
   ];
 
@@ -171,7 +171,7 @@ const SeeMembers = () => {
                   <td className="py-4">{member.email}</td>
                   <td className="py-4">{member.location}</td>
                   <td className="py-4">{member.role.toUpperCase()}</td>
-                  <td className="py-4">{member.providerId}</td>
+                  <td className="py-4">{member.providerId.toUpperCase()}</td>
                   <td className="text-center space-x-2">
                     <div className="tooltip" data-tip="Member">
                       <button
