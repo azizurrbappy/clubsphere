@@ -1,14 +1,12 @@
 import React, { use } from 'react';
-import { Navigate, useLocation } from 'react-router';
+import { Navigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { AuthModal } from '../Context/AuthModal';
 
 const PrivetRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  const location = useLocation();
-  const { resetModal, onboardingModal } = use(AuthModal);
 
-  if (loading) {
+  if (!user?.accessToken || loading) {
     return (
       <section className="mt-20">
         <div className="w-fit mx-auto">

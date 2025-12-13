@@ -1,8 +1,6 @@
 import React from 'react';
-import { Users, Box, TrendingUp, Clock } from 'lucide-react';
+import { Users, UsersRound, CalendarRange, CreditCard } from 'lucide-react';
 import {
-  LineChart,
-  Line,
   BarChart,
   Bar,
   XAxis,
@@ -12,8 +10,12 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AdminDashboard = () => {
+  const axiosSecure = useAxiosSecure();
+
   const membershipData = [
     { name: 'Downtown Club', members: 4000 },
     { name: 'Uptown Club', members: 3000 },
@@ -25,33 +27,46 @@ const AdminDashboard = () => {
   ];
 
   // Stats Data
+  const {
+    data: statsData,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ['adminStats'],
+    queryFn: async () => {
+      const res = await axiosSecure('/admin-dash');
+      return res.data;
+    },
+  });
+
   const stats = [
     {
       title: 'Total User',
-      value: '40,689',
+      value: statsData?.totalUsers,
       trendColor: 'text-green-500',
       icon: <Users size={24} className="text-purple-600" />,
       iconBg: 'bg-purple-100',
     },
     {
       title: 'Total Memberships',
-      value: '10293',
+      value: statsData?.totalMemberships,
       trendColor: 'text-green-500',
-      icon: <Box size={24} className="text-yellow-600" />,
+      icon: <UsersRound size={24} className="text-yellow-600" />,
       iconBg: 'bg-yellow-100',
     },
     {
       title: 'Total Events',
-      value: '$89,000',
+      value: statsData?.totalEvents,
       trendColor: 'text-red-500',
-      icon: <TrendingUp size={24} className="text-green-600" />,
+      icon: <CalendarRange size={24} className="text-green-600" />,
       iconBg: 'bg-green-100',
     },
     {
       title: 'Total Payments Amount',
-      value: '2040',
+      value: statsData?.totalPaymentsAmount,
       trendColor: 'text-green-500',
-      icon: <Clock size={24} className="text-orange-600" />,
+      icon: <CreditCard size={24} className="text-orange-600" />,
       iconBg: 'bg-orange-100',
     },
   ];
@@ -152,10 +167,9 @@ const AdminDashboard = () => {
       <div className="card bg-white shadow-sm">
         <div className="card-body p-6">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-gray-800">Deals Details</h3>
-            <select className="select select-bordered select-sm w-32 bg-gray-50 text-gray-600">
-              <option>October</option>
-            </select>
+            <h3 className="text-xl font-bold text-gray-800">
+              Recent 5 Clubs Details
+            </h3>
           </div>
 
           <div className="overflow-x-auto">
