@@ -155,9 +155,8 @@ const SeeMembers = () => {
               <tr className="text-gray-400 border-b border-gray-100 text-sm">
                 <th className="pb-4 font-medium pl-2">Full Name</th>
                 <th className="pb-4 font-medium">Email</th>
-                <th className="pb-4 font-medium">Location</th>
                 <th className="pb-4 font-medium">Role</th>
-                <th className="pb-4 font-medium">Provider</th>
+                <th className="pb-4 font-medium">Created At</th>
                 <th className="pb-4 font-medium text-center">Action</th>
               </tr>
             </thead>
@@ -169,9 +168,8 @@ const SeeMembers = () => {
                 >
                   <td className="py-4 pl-2 font-medium">{member.name}</td>
                   <td className="py-4">{member.email}</td>
-                  <td className="py-4">{member.location}</td>
                   <td className="py-4">{member.role.toUpperCase()}</td>
-                  <td className="py-4">{member.providerId.toUpperCase()}</td>
+                  <td className="py-4">{member.metadata.creationTime}</td>
                   <td className="text-center space-x-2">
                     <div className="tooltip" data-tip="Member">
                       <button

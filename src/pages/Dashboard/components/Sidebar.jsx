@@ -149,7 +149,7 @@ const Sidebar = () => {
       <div className="bg-base-100 p-4 rounded-xl border border-gray-200">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-bold text-lg">Your clubs</h3>
-          <a href="#" className="text-sm text-primary font-semibold">
+          <a href="#" className="text-sm text-[#3659e3] font-semibold">
             See all
           </a>
         </div>
