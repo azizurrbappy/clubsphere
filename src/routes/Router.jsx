@@ -7,6 +7,7 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import PrivetRoute from './PrivetRoute';
 import SeeMembers from '../pages/Dashboard/SeeMembers/SeeMembers';
 import ManageClub from '../pages/Dashboard/ManageClub/ManageClub';
+import Transactions from '../pages/Dashboard/Transactions/Transactions';
 
 export const Router = createBrowserRouter([
   {
@@ -45,7 +46,7 @@ export const Router = createBrowserRouter([
       },
       {
         path: '/dashboard/transactions',
-        element: <p>Transactions</p>,
+        element: <Transactions></Transactions>,
       },
     ],
   },
