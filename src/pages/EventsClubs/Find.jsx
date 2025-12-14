@@ -1,14 +1,16 @@
 import { CalendarDays, Users, Video } from 'lucide-react';
-import { Link, useParams } from 'react-router';
+import { Link, Navigate, useParams } from 'react-router';
 import Container from '../../components/Container/Container';
+import Clubs from './Clubs';
+import Events from './Events';
 
 const Find = () => {
   const { query } = useParams();
 
-  const source = query.split('=')[1].toLowerCase();
+  const source = query?.split('=')[1]?.toLowerCase();
 
   return (
-    <Container className="mt-10">
+    <Container className="mt-10 mb-20">
       {/* Select Events Or Clubs */}
       <div className="flex items-center gap-2.5">
         <Link
@@ -31,8 +33,10 @@ const Find = () => {
         </Link>
       </div>
 
-      <div className="pt-5 flex items-center justify-between sticky top-0 z-50">
-        <h1 className="text-3xl font-bold">Events For You</h1>
+      <div className="pt-5 flex items-center justify-between">
+        <h1 className="text-3xl font-bold">
+          {source === 'events' ? 'Events' : 'Clubs'} For You
+        </h1>
 
         <div className="space-x-4">
           <select
@@ -58,7 +62,14 @@ const Find = () => {
       <div className="divider my-5 text-[#d0d0d4]"></div>
 
       {/* Event and group card */}
-      <section></section>
+      <section className="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-6">
+        {source === 'events' && (
+          <section>
+            <Events></Events>
+          </section>
+        )}
+        {source === 'clubs' && <Clubs></Clubs>}
+      </section>
     </Container>
   );
 };
