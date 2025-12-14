@@ -108,17 +108,22 @@ const Sidebar = () => {
             <>
               <NavLink to="/dashboard">
                 <li>
-                  <UserRoundPlus size={18} /> Create club
+                  <UserRoundPlus size={18} /> My Clubs
                 </li>
               </NavLink>
               <NavLink to="/dashboard">
                 <li>
-                  <CalendarPlus2 size={18} /> Create event
+                  <CalendarPlus2 size={18} /> Club Members
                 </li>
               </NavLink>
               <NavLink to="/dashboard">
                 <li>
-                  <UserRoundSearch size={18} /> See members
+                  <UserRoundSearch size={18} /> Events Management
+                </li>
+              </NavLink>
+              <NavLink to="/dashboard">
+                <li>
+                  <UserRoundSearch size={18} /> Event Registrations
                 </li>
               </NavLink>
             </>
