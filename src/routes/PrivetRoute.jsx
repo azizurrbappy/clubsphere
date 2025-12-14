@@ -6,7 +6,7 @@ import { AuthModal } from '../Context/AuthModal';
 const PrivetRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (!user?.accessToken || loading) {
+  if (loading) {
     return (
       <section className="mt-20">
         <div className="w-fit mx-auto">

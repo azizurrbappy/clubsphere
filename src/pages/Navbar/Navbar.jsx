@@ -1,6 +1,6 @@
 import React, { use } from 'react';
 import Container from '../../components/Container/Container';
-import { Link, NavLink } from 'react-router';
+import { Link, Navigate, NavLink } from 'react-router';
 import {
   CalendarDays,
   DoorOpen,
