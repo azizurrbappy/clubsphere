@@ -121,11 +121,11 @@ const SeeMembers = () => {
         ))}
       </div>
 
-      {/* Customers Table Section */}
+      {/* Members Table Section */}
       <div className="bg-white rounded-3xl shadow-sm p-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
           <div>
-            <h2 className="text-xl font-bold text-gray-800">All Members</h2>
+            <h2 className="text-xl font-bold text-gray-800">Manage User</h2>
           </div>
           <div className="flex gap-4">
             <div className="relative">

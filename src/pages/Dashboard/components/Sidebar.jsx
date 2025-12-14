@@ -92,14 +92,14 @@ const Sidebar = () => {
                   <Users size={18} /> Manage User
                 </li>
               </NavLink>
-              <NavLink to="/dashboard">
+              <NavLink to="/dashboard/manage-clubs">
                 <li>
-                  <ClipboardList size={18} /> Manage Club
+                  <ClipboardList size={18} /> Manage Clubs
                 </li>
               </NavLink>
-              <NavLink to="/dashboard">
+              <NavLink to="/dashboard/transactions">
                 <li>
-                  <CreditCard size={18} /> View Payments
+                  <CreditCard size={18} /> Transactions
                 </li>
               </NavLink>
             </>

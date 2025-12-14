@@ -6,6 +6,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import PrivetRoute from './PrivetRoute';
 import SeeMembers from '../pages/Dashboard/SeeMembers/SeeMembers';
+import ManageClub from '../pages/Dashboard/ManageClub/ManageClub';
 
 export const Router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ export const Router = createBrowserRouter([
       {
         path: '/dashboard/manage-user',
         element: <SeeMembers></SeeMembers>,
+      },
+      {
+        path: '/dashboard/manage-clubs',
+        element: <ManageClub></ManageClub>,
+      },
+      {
+        path: '/dashboard/transactions',
+        element: <p>Transactions</p>,
       },
     ],
   },
