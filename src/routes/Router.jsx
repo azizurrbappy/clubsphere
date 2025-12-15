@@ -8,11 +8,14 @@ import PrivetRoute from './PrivetRoute';
 import SeeMembers from '../pages/Dashboard/SeeMembers/SeeMembers';
 import ManageClub from '../pages/Dashboard/ManageClub/ManageClub';
 import Transactions from '../pages/Dashboard/Transactions/Transactions';
+import MyClubs from '../pages/Dashboard/MyClubs';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
 
 export const Router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -37,16 +40,20 @@ export const Router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
       },
       {
-        path: '/dashboard/manage-user',
+        path: 'manage-user',
         element: <SeeMembers></SeeMembers>,
       },
       {
-        path: '/dashboard/manage-clubs',
+        path: 'manage-clubs',
         element: <ManageClub></ManageClub>,
       },
       {
-        path: '/dashboard/transactions',
+        path: 'transactions',
         element: <Transactions></Transactions>,
+      },
+      {
+        path: 'my-clubs',
+        element: <MyClubs></MyClubs>,
       },
     ],
   },

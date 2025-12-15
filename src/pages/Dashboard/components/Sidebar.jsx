@@ -2,13 +2,11 @@ import React from 'react';
 import {
   BookUser,
   CalendarDays,
-  CalendarPlus2,
+  CalendarPlus,
+  CalendarRange,
   ClipboardList,
   CreditCard,
-  FileUser,
   Gauge,
-  UserRoundPlus,
-  UserRoundSearch,
   Users,
   UsersRound,
 } from 'lucide-react';
@@ -87,17 +85,17 @@ const Sidebar = () => {
           </NavLink>
           {role.role === 'admin' && (
             <>
-              <NavLink to="/dashboard/manage-user">
+              <NavLink to="manage-user">
                 <li>
                   <Users size={18} /> Manage User
                 </li>
               </NavLink>
-              <NavLink to="/dashboard/manage-clubs">
+              <NavLink to="manage-clubs">
                 <li>
                   <ClipboardList size={18} /> Manage Clubs
                 </li>
               </NavLink>
-              <NavLink to="/dashboard/transactions">
+              <NavLink to="transactions">
                 <li>
                   <CreditCard size={18} /> Transactions
                 </li>
@@ -106,24 +104,24 @@ const Sidebar = () => {
           )}
           {role.role === 'clubManager' && (
             <>
-              <NavLink to="/dashboard">
+              <NavLink to="my-clubs">
                 <li>
-                  <UserRoundPlus size={18} /> My Clubs
+                  <UsersRound size={18} /> My Clubs
                 </li>
               </NavLink>
-              <NavLink to="/dashboard">
+              <NavLink to="">
                 <li>
-                  <CalendarPlus2 size={18} /> Club Members
+                  <Users size={18} /> Club Members
                 </li>
               </NavLink>
-              <NavLink to="/dashboard">
+              <NavLink to="">
                 <li>
-                  <UserRoundSearch size={18} /> Events Management
+                  <CalendarRange size={18} /> Events Management
                 </li>
               </NavLink>
-              <NavLink to="/dashboard">
+              <NavLink to="">
                 <li>
-                  <UserRoundSearch size={18} /> Event Registrations
+                  <CalendarPlus size={18} /> Event Registrations
                 </li>
               </NavLink>
             </>
