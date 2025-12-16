@@ -162,66 +162,6 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Deals Details Table */}
-      <div className="card bg-white shadow-sm">
-        <div className="card-body p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-gray-800">
-              Recent 5 Clubs Details
-            </h3>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="table w-full">
-              {/* Head */}
-              <thead className="bg-gray-100/50 text-gray-600 rounded-lg">
-                <tr>
-                  <th className="py-4">Product Name</th>
-                  <th>Location</th>
-                  <th>Date - Time</th>
-                  <th>Piece</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* Row */}
-                {deals.map((deal, index) => (
-                  <tr
-                    key={index}
-                    className="hover:bg-gray-50 border-b border-gray-100"
-                  >
-                    <td className="py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle w-10 h-10">
-                            <img src={deal.img} alt={deal.product} />
-                          </div>
-                        </div>
-                        <div className="font-semibold text-gray-700">
-                          {deal.product}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-gray-600">{deal.location}</td>
-                    <td className="text-gray-600">{deal.datetime}</td>
-                    <td className="text-gray-600">{deal.piece}</td>
-                    <td className="text-gray-600">{deal.amount}</td>
-                    <td>
-                      <div
-                        className={`badge ${deal.statusClass} border-none py-3 px-4`}
-                      >
-                        {deal.status}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

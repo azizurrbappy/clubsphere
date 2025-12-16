@@ -7,32 +7,122 @@ import {
   Eye,
   Check,
   X,
+  Clock,
 } from 'lucide-react';
 import useRole from '../../../hooks/useRole';
 import useAuth from '../../../hooks/useAuth';
 import { Navigate } from 'react-router';
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 
 const ManageClub = () => {
   const { role } = useRole();
-  const { user } = useAuth();
+  const { user, setLoading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState('');
 
-  // const filteredClubs = clubs?.filter(club => {
-  //   const modifiedSearchTerm = searchTerm.toLowerCase();
+  // Fetch Data
+  const {
+    data: clubs = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ['manageClubs'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/clubs`);
+      return res.data;
+    },
+  });
 
-  //   if (!modifiedSearchTerm.trim()) {
-  //     return true;
-  //   }
+  // Approved Mutation
+  const approvedClubMutation = useMutation({
+    mutationFn: async ({ id, status }) => {
+      const res = await axiosSecure.patch(
+        `/club-status?id=${id}&status=${status}`
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      refetch();
+      toast.success('Club approved successfully!');
+    },
+    onError: error => {
+      toast.error(error.response?.data?.message || 'Failed to approved club');
+    },
+  });
 
-  //   return club.clubName.toLowerCase().includes(modifiedSearchTerm);
-  // });
+  // Pending Mutation
+  const pendingClubMutation = useMutation({
+    mutationFn: async ({ id, status }) => {
+      const res = await axiosSecure.patch(
+        `/club-status?id=${id}&status=${status}`
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      refetch();
+      toast.success('Club pending successfully!');
+    },
+    onError: error => {
+      toast.error(error.response?.data?.message || 'Failed to pending club');
+    },
+  });
+
+  // Rejected Mutation
+  const rejectedClubMutation = useMutation({
+    mutationFn: async ({ id, status }) => {
+      const res = await axiosSecure.patch(
+        `/club-status?id=${id}&status=${status}`
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      refetch();
+      toast.success('Club rejected successfully!');
+    },
+    onError: error => {
+      toast.error(error.response?.data?.message || 'Failed to rejected club');
+    },
+  });
+
+  // For search clubs
+  const filteredClubs = clubs.filter(club => {
+    const modifiedSearchTerm = searchTerm.toLowerCase();
+
+    if (!modifiedSearchTerm.trim()) {
+      return true;
+    }
+
+    try {
+      const regex = new RegExp(searchTerm.trim(), 'gi');
+      return regex.test(club.clubName);
+    } catch (e) {
+      return club.clubName.toLowerCase().includes(modifiedSearchTerm);
+    }
+  });
+
+  // For Action Btn
+  const tableAction = (clubID, status = null) => {
+    if (status === 'approved') {
+      approvedClubMutation.mutate({ id: clubID, status: status });
+    }
+    if (status === 'pending') {
+      pendingClubMutation.mutate({ id: clubID, status: status });
+    }
+    if (status === 'rejected') {
+      rejectedClubMutation.mutate({ id: clubID, status: status });
+    }
+  };
 
   if (role.role !== 'admin') {
     return <Navigate to="/dashboard"></Navigate>;
+  }
+
+  if (isLoading) {
+    setLoading(true);
+    return setLoading(false);
   }
 
   return (
@@ -77,33 +167,80 @@ const ManageClub = () => {
               </tr>
             </thead>
             <tbody className="text-sm text-gray-700">
-              <tr className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors last:border-none">
-                <td className="py-4 pl-2 font-medium"></td>
-                <td className="py-4"></td>
-                <td className="py-4"></td>
-                <td className="py-4"></td>
-                <td className="text-center space-x-2"></td>
-              </tr>
+              {filteredClubs.map((club, index) => (
+                <tr
+                  key={index}
+                  className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors last:border-none"
+                >
+                  <td className="py-4 pl-2 font-medium">{club.clubName}</td>
+                  <td className="py-4">{club.managerEmail}</td>
+                  <td className="py-4">
+                    {club.status === 'approved' && (
+                      <span className="badge badge-soft badge-success rounded-full text-xs">
+                        {club.status.toUpperCase()}
+                      </span>
+                    )}
+                    {club.status === 'pending' && (
+                      <span className="badge badge-soft badge-warning rounded-full text-xs">
+                        {club.status.toUpperCase()}
+                      </span>
+                    )}
+                    {club.status === 'rejected' && (
+                      <span className="badge badge-soft badge-error rounded-full text-xs">
+                        {club.status.toUpperCase()}
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-4">
+                    {club.membershipFee === 'Free' ? (
+                      <span class="badge badge-soft badge-success rounded-full text-xs">
+                        Free
+                      </span>
+                    ) : (
+                      <span>${club.membershipFee}</span>
+                    )}
+                  </td>
+                  <td className="text-center space-x-2">
+                    {(club.status === 'pending' ||
+                      club.status === 'rejected') && (
+                      <div className="tooltip" data-tip="Approve">
+                        <button
+                          onClick={() => tableAction(club._id, 'approved')}
+                          className="btn btn-soft btn-success rounded-full h-fit p-2"
+                        >
+                          <Check size={18} />
+                        </button>
+                      </div>
+                    )}
+
+                    {(club.status === 'approved' ||
+                      club.status === 'rejected') && (
+                      <div className="tooltip" data-tip="Mark as Pending">
+                        <button
+                          onClick={() => tableAction(club._id, 'pending')}
+                          className="btn btn-soft btn-warning rounded-full h-fit p-2"
+                        >
+                          <Clock size={18} />
+                        </button>
+                      </div>
+                    )}
+
+                    {(club.status === 'pending' ||
+                      club.status === 'approved') && (
+                      <div className="tooltip" data-tip="Reject">
+                        <button
+                          onClick={() => tableAction(club._id, 'rejected')}
+                          className="btn btn-soft btn-error rounded-full h-fit p-2"
+                        >
+                          <X size={18} />
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
-        </div>
-
-        {/* Pagination - kept static as placeholder/example since logic wasn't provided for server-side pagination */}
-        <div className="flex justify-between items-center mt-6 text-sm text-gray-500">
-          {/* Reusing existing pagination UI structure */}
-          <div>Showing data ...</div>
-          <div className="flex gap-2">
-            {/* ... buttons ... */}
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">
-              <ChevronLeft size={16} />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm hover:bg-indigo-700">
-              1
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">
-              <ChevronRight size={16} />
-            </button>
-          </div>
         </div>
       </div>
     </div>

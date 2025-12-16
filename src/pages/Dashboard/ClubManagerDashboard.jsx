@@ -9,45 +9,41 @@ const ClubManagerDashboard = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // const { data: stats = {}, isLoading } = useQuery({
-  //   queryKey: ['manager-stats', user?.email],
-  //   queryFn: async () => {
-  //     // Mocking data for now as per plan, waiting for backend endpoint
-  //     // In real scenario: const res = await axiosSecure.get('/manager/stats'); return res.data;
-  //     return {
-  //       totalClubs: 5,
-  //       totalMembers: 1250,
-  //       totalEvents: 24,
-  //       totalPayments: 45000
-  //     };
-  //   }
-  // });
+  const { data: stats = {}, isLoading } = useQuery({
+    queryKey: ['manager-stats', user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/manager-dash?managerEmail=${user.email}`
+      );
+      return res.data;
+    },
+  });
 
   const statItems = [
     {
       title: 'Managed Clubs',
-      value: 0,
+      value: stats.totalClubs || 0,
       icon: Building2,
       colorClass: 'text-blue-600',
       bgClass: 'bg-blue-100',
     },
     {
       title: 'Total Members',
-      value: 0,
+      value: stats.totalMembers || 0,
       icon: Users,
       colorClass: 'text-purple-600',
       bgClass: 'bg-purple-100',
     },
     {
       title: 'Total Events',
-      value: 0,
+      value: stats.totalEvents || 0,
       icon: Calendar,
       colorClass: 'text-orange-600',
       bgClass: 'bg-orange-100',
     },
     {
       title: 'Total Payments',
-      value: 0,
+      value: stats.totalPayment || 0,
       icon: Banknote,
       colorClass: 'text-green-600',
       bgClass: 'bg-green-100',

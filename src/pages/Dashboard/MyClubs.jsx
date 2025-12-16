@@ -14,6 +14,8 @@ import {
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import useRole from '../../hooks/useRole';
+import { Navigate } from 'react-router';
 
 const MyClubs = () => {
   const { user } = useAuth();
@@ -22,6 +24,7 @@ const MyClubs = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingClub, setEditingClub] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const { role } = useRole();
 
   const {
     register,
@@ -170,6 +173,9 @@ const MyClubs = () => {
     reset();
   };
 
+  if (role.role !== 'clubManager') {
+    return <Navigate to="/dashboard"></Navigate>;
+  }
   return (
     <div className="min-h-screen">
       {/* Clubs Table */}
@@ -245,9 +251,21 @@ const MyClubs = () => {
                     <td className="py-4 pl-2 font-medium">{club.clubName}</td>
                     <td className="py-4">{club.managerEmail}</td>
                     <td className="py-4">
-                      <span className="badge badge-soft badge-warning rounded-full text-xs">
-                        {club.status.toUpperCase()}
-                      </span>
+                      {club.status === 'approved' && (
+                        <span className="badge badge-soft badge-success rounded-full text-xs">
+                          {club.status.toUpperCase()}
+                        </span>
+                      )}
+                      {club.status === 'pending' && (
+                        <span className="badge badge-soft badge-warning rounded-full text-xs">
+                          {club.status.toUpperCase()}
+                        </span>
+                      )}
+                      {club.status === 'rejected' && (
+                        <span className="badge badge-soft badge-error rounded-full text-xs">
+                          {club.status.toUpperCase()}
+                        </span>
+                      )}
                     </td>
                     <td className="py-4">
                       <div>

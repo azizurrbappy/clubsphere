@@ -46,6 +46,7 @@ export const Router = createBrowserRouter([
       {
         path: 'manage-clubs',
         element: <ManageClub></ManageClub>,
+        errorElement: <ErrorPage />,
       },
       {
         path: 'transactions',
