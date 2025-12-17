@@ -10,28 +10,55 @@ import {
   Share2,
   MoreHorizontal,
 } from 'lucide-react';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import useRole from '../../hooks/useRole';
+import { toast } from 'react-toastify';
 
 const ClubDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
+  const { role } = useRole();
   const axiosSecure = useAxiosSecure();
 
   // Fetch Data
-  // const {
-  //   data: clubs,
-  //   isLoading,
-  //   isError,
-  // } = useQuery({
-  //   queryKey: ['clubDetails'],
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get(`/club-details`);
-  //     return res.data;
-  //   },
-  // });
+  const {
+    data: club,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['clubDetails'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/club-details/${id}`);
+      return res.data;
+    },
+  });
+
+  const handleMembership = () => {
+    if (role === 'member') {
+      const membershipData = {
+        userEmail: user.email,
+        clubID: club._id,
+        status: 'active',
+        paymentID: 'N/A',
+        joinedAt: new Date().toUTCString(),
+      };
+
+      toast.success(
+        `You have received a 6-month membership to the ${club.clubName}!!`
+      );
+    } else {
+      toast.error(
+        `${user.displayName.split(' ')[0]} you are not ClubSphere member!`
+      );
+    }
+  };
+
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <div className="bg-base-100 min-h-screen pb-10">
@@ -42,36 +69,32 @@ const ClubDetails = () => {
             {/* Banner/Logo */}
             <div className="w-full md:w-[400px] aspect-[4/3] bg-base-200 rounded-2xl overflow-hidden shadow-sm relative group">
               <img
-                src="https://img.freepik.com/free-vector/flat-design-wordpress-logo-template_23-2149466367.jpg"
-                alt="WordPress Cumilla"
+                src={club.bannerImage}
+                alt={club.clubName}
                 className="w-full h-full object-cover"
               />
             </div>
 
             {/* Club Info */}
             <div className="flex-1 pt-2">
-              <div className="text-sm text-gray-500 mb-2 flex items-center gap-1">
-                <span>Part of WordPress</span>
+              {/* <div className="text-sm text-gray-500 mb-2 flex items-center gap-1">
                 <span>•</span>
                 <span>677 groups</span>
                 <Globe size={14} className="ml-1" />
-              </div>
+              </div> */}
 
               <h1 className="text-4xl font-bold text-base-content mb-4 leading-tight">
-                Cumilla WordPress <br /> Meetup
+                {club.clubName}
               </h1>
 
               <div className="space-y-3 mb-6">
                 <div className="flex items-center text-gray-600 gap-2">
                   <MapPin size={18} />
-                  <span>Komilla, Bangladesh</span>
+                  <span>{club.location}</span>
                 </div>
                 <div className="flex items-center text-gray-600 gap-2">
                   <Users size={18} />
                   <span>183 members</span>
-                  <span>•</span>
-                  <span>Public group</span>
-                  <Globe size={14} />
                 </div>
               </div>
 
@@ -143,8 +166,11 @@ const ClubDetails = () => {
               <button className="btn btn-ghost btn-circle">
                 <MoreHorizontal size={20} />
               </button>
-              <button className="btn btn-neutral rounded-full px-6 normal-case text-white">
-                Join this group
+              <button
+                onClick={() => handleMembership()}
+                className="btn bg-[#3659e3] rounded-full px-6 normal-case text-white"
+              >
+                Join this club
               </button>
             </div>
           </div>
@@ -152,9 +178,12 @@ const ClubDetails = () => {
       </div>
 
       {/* Mobile Join Button (Fixed Bottom) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 z-50">
-        <button className="btn btn-neutral w-full rounded-full">
-          Join this group
+      <div className="md:hidden fixed bottom-0 left-0 right-0 px-4 py-2 z-50 backdrop-blur-2xl shadow-md">
+        <button
+          onClick={() => handleMembership()}
+          className="btn bg-[#3659e3] w-full rounded-full text-white border-0 shadow-none"
+        >
+          Join this club
         </button>
       </div>
 
@@ -169,77 +198,29 @@ const ClubDetails = () => {
                 {/* Decorative squiggly line if needed, using generic text or svg */}
               </h2>
               <div className="prose prose-sm max-w-none text-gray-600">
-                <p>
-                  We're a group of local WordPress developers, designers, and
-                  publishers who get together to share our knowledge and
-                  experience and to meet other WordPress users in the area. This
-                  WordPress Meetup is open to all who love WordPress --- join
-                  us!
-                </p>
-                <p>
-                  WordPress Global Community Sponsors help fund WordPress Meetup
-                  groups and WordCamps around the world. Thank you to{' '}
-                  <a href="#" className="text-blue-600 hover:underline">
-                    WordPress.com
-                  </a>
-                  , WooCommerce, Jetpack, Bluehost, and A2 Hosting for their
-                  support!
-                </p>
+                <p>{club.description}</p>
               </div>
             </section>
           </div>
 
           {/* Right Column (Sidebar) */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Organizers Widget */}
-            <div className="card bg-base-100 shadow-sm border border-base-200">
-              <div className="card-body p-6">
-                <h3 className="card-title text-lg font-bold mb-4">
-                  Organizers
-                </h3>
-                <div className="flex items-start gap-4">
-                  <div className="avatar">
-                    <div className="w-10 rounded">
-                      <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/9/98/WordPress_blue_logo.svg"
-                        alt="WP"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm">
-                      WordPress{' '}
-                      <span className="text-gray-500 font-normal">
-                        and 4 others
-                      </span>
-                    </p>
-                    <a
-                      href="#"
-                      className="text-blue-600 text-sm hover:underline"
-                    >
-                      Message
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Members Widget */}
             <div className="card bg-base-100 shadow-sm border border-base-200">
               <div className="card-body p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="card-title text-lg font-bold">
-                    Members{' '}
+                    Related Clubs{' '}
                     <span className="text-gray-500 text-base font-normal ml-1">
-                      183
+                      6
                     </span>
                   </h3>
-                  <a
-                    href="#"
+                  <Link
+                    to="/find/source=Clubs"
                     className="text-blue-600 text-sm font-semibold hover:underline"
                   >
                     See all
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="grid grid-cols-5 gap-2">
