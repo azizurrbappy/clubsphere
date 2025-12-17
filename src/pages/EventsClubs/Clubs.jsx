@@ -17,7 +17,7 @@ const Clubs = () => {
   } = useQuery({
     queryKey: ['clubs'],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/clubs`);
+      const res = await axiosSecure.get(`/clubs?status=approved`);
       return res.data;
     },
   });

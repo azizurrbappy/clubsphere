@@ -66,6 +66,10 @@ export const Router = createBrowserRouter([
         path: 'club-details',
         element: <ClubDetails></ClubDetails>,
       },
+      {
+        path: 'club-members',
+        element: <ClubDetails></ClubDetails>,
+      },
     ],
   },
 ]);

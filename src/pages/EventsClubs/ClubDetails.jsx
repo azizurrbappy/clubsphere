@@ -36,19 +36,28 @@ const ClubDetails = () => {
     },
   });
 
-  const handleMembership = () => {
-    if (role === 'member') {
+  const handleMembership = async () => {
+    if (role.role === 'member') {
       const membershipData = {
         userEmail: user.email,
         clubID: club._id,
+        clubName: club.clubName,
         status: 'active',
         paymentID: 'N/A',
         joinedAt: new Date().toUTCString(),
       };
 
-      toast.success(
-        `You have received a 6-month membership to the ${club.clubName}!!`
-      );
+      const res = await axiosSecure.post('/membership', membershipData);
+
+      if (res.status === 200) {
+        return toast.error(res.data.message);
+      }
+
+      if (res.data.data.insertedId) {
+        toast.success(
+          `You have received a 6-month membership to the ${club.clubName}!`
+        );
+      }
     } else {
       toast.error(
         `${user.displayName.split(' ')[0]} you are not ClubSphere member!`

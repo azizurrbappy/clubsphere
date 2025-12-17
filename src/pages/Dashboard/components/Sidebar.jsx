@@ -146,31 +146,6 @@ const Sidebar = () => {
           )}
         </ul>
       </div>
-      {/* Your clubs menu */}
-      {role === 'member' && (
-        <div className="bg-base-100 p-4 rounded-xl border border-gray-200">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-lg">Your clubs</h3>
-            <a href="#" className="text-sm text-[#3659e3] font-semibold">
-              See all
-            </a>
-          </div>
-          <div className="text-center py-6">
-            <div className="mx-auto w-12 h-12 mb-2 flex items-center justify-center bg-gray-100 rounded-full">
-              <Users className="text-gray-400" size={24} />
-            </div>
-            <p className="text-gray-600 text-sm mb-4">
-              Looking for your people?
-            </p>
-            <p className="text-xs text-gray-500 mb-4 px-4">
-              Join a clubs that shares your passions and start connecting today.
-            </p>
-            <button className="btn btn-neutral btn-sm rounded-full">
-              Explore clubs near you
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
