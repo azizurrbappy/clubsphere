@@ -140,6 +140,7 @@ const MyClubs = () => {
           : parseFloat(data.membershipFee),
       status: 'pending',
       managerEmail: user.email,
+      createdBy: user.displayName,
     };
 
     if (editingClub) {

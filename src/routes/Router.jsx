@@ -10,6 +10,7 @@ import ManageClub from '../pages/Dashboard/ManageClub/ManageClub';
 import Transactions from '../pages/Dashboard/Transactions/Transactions';
 import MyClubs from '../pages/Dashboard/MyClubs';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import ClubDetails from '../pages/EventsClubs/ClubDetails';
 
 export const Router = createBrowserRouter([
   {
@@ -25,10 +26,15 @@ export const Router = createBrowserRouter([
         path: '/find/:query',
         element: <Find></Find>,
       },
+      {
+        path: '/club/:id',
+        element: <ClubDetails></ClubDetails>,
+      },
     ],
   },
   {
     path: '/dashboard',
+    errorElement: <ErrorPage />,
     element: (
       <PrivetRoute>
         <DashboardLayout></DashboardLayout>
@@ -55,6 +61,10 @@ export const Router = createBrowserRouter([
       {
         path: 'my-clubs',
         element: <MyClubs></MyClubs>,
+      },
+      {
+        path: 'club-details',
+        element: <ClubDetails></ClubDetails>,
       },
     ],
   },
