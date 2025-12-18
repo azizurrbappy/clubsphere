@@ -10,8 +10,8 @@ const Find = () => {
   const source = query?.split('=')[1]?.toLowerCase();
   const [searchTermEvent, setSearchTermEvent] = useState('');
   const [searchTermClub, setSearchTermClub] = useState('');
-  const [category, setCategory] = useState(null);
-  const [sort, setSort] = useState(null);
+  const [category, setCategory] = useState('');
+  const [sort, setSort] = useState('');
 
   return (
     <Container className="mt-10 mb-20">

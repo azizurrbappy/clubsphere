@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import Conatiner2 from '../../components/Container/Conatiner2';
 import CityCard from '../../components/CityCard/CityCard';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -22,6 +24,21 @@ const cardVariants = {
 };
 
 const PopularCities = () => {
+  const axiosSecure = useAxiosSecure();
+
+  // Fetch Data
+  const {
+    data: clubs,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['clubs'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/clubs?status=approved`);
+      return res.data;
+    },
+  });
+
   return (
     <Conatiner2 className="mt-8 mb-30">
       <motion.div
@@ -32,7 +49,7 @@ const PopularCities = () => {
         transition={{ duration: 0.5 }}
       >
         <h3 className="text-[#232326] text-3xl font-bold max-sm:text-2xl">
-          Popular cities on Meetup
+          Popular cities on ClubSphere
         </h3>
         <p className="text-[#464649] mt-3">
           Looking for fun things to do near you? See what ClubSphere organizers

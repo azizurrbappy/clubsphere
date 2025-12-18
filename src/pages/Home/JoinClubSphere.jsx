@@ -32,9 +32,9 @@ const JoinClubSphere = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          People use Meetup to meet new people, learn new things, find support,
-          get out of their comfort zones, and pursue their passions, together.
-          Membership is free.
+          People use ClubSphere to meet new people, learn new things, find
+          support, get out of their comfort zones, and pursue their passions,
+          together. Membership is free.
         </motion.p>
 
         <motion.div

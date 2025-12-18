@@ -58,7 +58,7 @@ const HowClubSphereWork = () => {
           </div>
           <div>
             <h4 className="text-[#232326] font-semibold">
-              Discover events and groups
+              Discover events and clubs
             </h4>
             <p className="text-[#464649] text-sm">
               See who's hosting local events for all the things you love
@@ -109,7 +109,7 @@ const HowClubSphereWork = () => {
               Start a group to host events
             </h4>
             <p className="text-[#464649] text-sm">
-              Create your own Meetup group, and draw from a community of
+              Create your own ClubSphere clubs, and draw from a community of
               millions
             </p>
             <Link

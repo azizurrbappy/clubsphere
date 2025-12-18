@@ -5,7 +5,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { Video } from 'lucide-react';
 
-const Clubs = () => {
+const Clubs = ({ searchTermClub, setSearchTermClub, category, sort }) => {
   const { user, setLoading } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -17,9 +17,27 @@ const Clubs = () => {
   } = useQuery({
     queryKey: ['clubs'],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/clubs?status=approved`);
+      const res = await axiosSecure.get(
+        `/clubs?status=approved&category=${category}&sort=${sort}`
+      );
       return res.data;
     },
+  });
+
+  // For search
+  const filteredClub = (clubs || []).filter(club => {
+    const modifiedSearchTerm = searchTermClub.toLowerCase();
+
+    if (!modifiedSearchTerm.trim()) {
+      return true;
+    }
+
+    try {
+      const regex = new RegExp(searchTermClub.trim(), 'gi');
+      return regex.test(club.clubName);
+    } catch (e) {
+      return club.clubName.toLowerCase().includes(modifiedSearchTerm);
+    }
   });
 
   return (
@@ -28,7 +46,7 @@ const Clubs = () => {
         ''
       ) : (
         <>
-          {clubs.map((club, index) => (
+          {filteredClub.map((club, index) => (
             <Link key={index} to={`/club/${club._id}`} className="max-w-fit">
               <img className=" rounded-3xl" src={club.bannerImage} alt="" />
 
