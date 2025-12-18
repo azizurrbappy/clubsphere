@@ -41,11 +41,22 @@ const Clubs = ({ searchTermClub, setSearchTermClub, category, sort }) => {
     }
   });
 
+  if (isLoading) {
+    return (
+      <section className="mt-20 col-span-full">
+        <div className="w-fit mx-auto">
+          <span className="loading loading-dots loading-xl mx-auto text-[#b9b9b9]"></span>
+        </div>
+        <h2 className="text-center text-xl font-bold text-[#232326]">
+          In progress...
+        </h2>
+      </section>
+    );
+  }
+
   return (
     <>
-      {isLoading ? (
-        ''
-      ) : (
+      {!isLoading && (
         <>
           {filteredClub.map((club, index) => (
             <Link key={index} to={`/club/${club._id}`} className="max-w-fit">
