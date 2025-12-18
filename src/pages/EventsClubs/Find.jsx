@@ -65,9 +65,9 @@ const Find = () => {
           >
             <option value="">Category</option>
             <option value="Social Activities">Social Activities</option>
-            <option value="Hobbies & Passions">Hobbies & Passions</option>
-            <option value="Sports & Fitness">Sports & Fitness</option>
-            <option value="Travel & Outdoor">Travel & Outdoor</option>
+            <option value="Hobbies and Passions">Hobbies & Passions</option>
+            <option value="Sports and Fitness">Sports & Fitness</option>
+            <option value="Travel and Outdoor">Travel & Outdoor</option>
           </select>
 
           <select

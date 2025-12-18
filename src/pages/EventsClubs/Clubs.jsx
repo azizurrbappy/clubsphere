@@ -14,8 +14,9 @@ const Clubs = ({ searchTermClub, setSearchTermClub, category, sort }) => {
     data: clubs,
     isLoading,
     isError,
+    refetch,
   } = useQuery({
-    queryKey: ['clubs'],
+    queryKey: ['clubs', category, sort],
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/clubs?status=approved&category=${category}&sort=${sort}`
